@@ -1,0 +1,8 @@
+- Funcionamento da composteira
+- O que podemos colocar na composteira
+- Tempo do processo de formação do adubo
+- Pra quais tipos de plantas determinados tipos de adubo funciona
+- Onde o adubo pode ser aplicado
+- Problemas que serão solucionados
+- Inteligência artificial
+- Flutter
