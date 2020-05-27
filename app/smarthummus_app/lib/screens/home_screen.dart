@@ -7,12 +7,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Widget _page = Container(color: Colors.red);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          color: Colors.indigo
-        ),
+        body: _page,
         bottomNavigationBar: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -28,20 +28,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 topRight: Radius.circular(30.0),
               ),
               child: BottomNavigationBar(
-                items: <BottomNavigationBarItem>[
+                items: [
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite), title: Text('Favourite')),
+                      title: Text(""), icon: Icon(Icons.home)),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite), title: Text('Favourite'))
+                      title: Text(""), icon: Icon(Icons.add_shopping_cart)),
+                  BottomNavigationBarItem(
+                      title: Text(""),
+                      icon: Icon(Icons.check_box_outline_blank, size: 60)),
+                  BottomNavigationBarItem(
+                      title: Text(""), icon: Icon(Icons.monetization_on)),
+                  BottomNavigationBarItem(
+                      title: Text(""), icon: Icon(Icons.person)),
                 ],
+                elevation: 1200,
+                type: BottomNavigationBarType.fixed,
+                iconSize: 35,
+                showSelectedLabels: false,
+                unselectedItemColor: Colors.blueGrey,
+                selectedItemColor: Colors.indigoAccent,
+                showUnselectedLabels: false,
+                currentIndex: _selectedindex,
+                onTap: _tapped,
               ),
-            )));
+            )
+        )
+    );
   }
 
   int _selectedindex = 0;
   void _tapped(int index) {
     setState(() {
       _selectedindex = index;
+
+      switch (index) {
+        case 0:
+          _page = Container(color: Colors.purple);
+          break;
+
+        case 1:
+          _page = Container(color: Colors.blue);
+          break;
+      }
     });
   }
 }
