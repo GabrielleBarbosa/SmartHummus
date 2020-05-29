@@ -8,12 +8,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Widget _page = Container(color: Colors.red);
+  final color = Colors.purple;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: _page,
         bottomNavigationBar: Container(
+          color: color,
+          child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30), topLeft: Radius.circular(30)),
@@ -41,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   BottomNavigationBarItem(
                       title: Text(""), icon: Icon(Icons.person)),
                 ],
+                backgroundColor: Colors.white,
                 elevation: 1200,
                 type: BottomNavigationBarType.fixed,
                 iconSize: 35,
@@ -53,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )
         )
-    );
+    ));
   }
 
   int _selectedindex = 0;
