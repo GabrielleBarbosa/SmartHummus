@@ -1,4 +1,3 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 
@@ -23,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   topRight: Radius.circular(30), topLeft: Radius.circular(30)),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+                    color: Colors.black38, spreadRadius: 0, blurRadius: 8),
               ],
             ),
             child: ClipRRect(
@@ -50,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 type: BottomNavigationBarType.fixed,
                 iconSize: 35,
                 showSelectedLabels: false,
-                unselectedItemColor: Colors.blueGrey,
-                selectedItemColor: Colors.indigoAccent,
+                unselectedItemColor: Color.fromRGBO(195, 214, 220, 100.0),
+                selectedItemColor: Color.fromRGBO(30, 67, 255, 100.0),
                 showUnselectedLabels: false,
                 currentIndex: _selectedindex,
                 onTap: _tapped,
