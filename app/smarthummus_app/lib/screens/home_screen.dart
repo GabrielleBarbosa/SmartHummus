@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:smarthummusapp/screens/feed_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -7,8 +8,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _page = Container(color: Colors.red);
-  final color = Colors.purple;
+  Widget _page = FeedScreen();
+  final color = Colors.white;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       switch (index) {
         case 0:
-          _page = Container(color: Colors.purple);
+          _page = FeedScreen();
           break;
 
         case 1:
