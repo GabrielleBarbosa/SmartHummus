@@ -9,7 +9,8 @@ class SmartHummusApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           primarySwatch: Colors.blue,
-          primaryColor: Color.fromARGB(255, 4, 125, 141) //a, r, g, b
+          primaryColor: Color.fromARGB(255, 4, 125, 141), //a, r, g, b
+          fontFamily: 'Raleway'
       ),
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),

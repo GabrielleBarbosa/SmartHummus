@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 
+import 'composter_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -73,6 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
         case 1:
           _page = Container(color: Colors.blue);
           break;
+
+        case 2:
+          _page = ComposterScreen();
+          break;
+
       }
     });
   }
