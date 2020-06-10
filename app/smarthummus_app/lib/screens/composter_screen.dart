@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ComposterScreen extends StatelessWidget {
+class ComposterScreen extends StatefulWidget {
+  @override
+  _ComposterScreenState createState() => _ComposterScreenState();
+}
+
+class _ComposterScreenState extends State<ComposterScreen> {
+
   final List<Widget> myTabs = <Widget>[
-    Tab(text: 'LEFT', icon: Icon(Icons.monetization_on)),
-    Tab(text: 'RIGHT', icon: Icon(Icons.add_shopping_cart)),
-    Tab(text: 'RIGHT', icon: Icon(Icons.add_shopping_cart))
+    Tab(icon: Icon(Icons.add, size: 35.0,)),
+    Tab(icon: Icon(Icons.add, size: 35.0)),
+    Tab(icon: Icon(Icons.add, size: 35.0))
   ];
+
+  final List<Color> _colors = [Colors.grey, Colors.lightBlue, Colors.orange];
+  int _selectedItem = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +23,32 @@ class ComposterScreen extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          bottom: TabBar(
-            indicatorColor: Colors.transparent,
-            unselectedLabelColor: Colors.orange,
-            tabs: [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
-            ],
-          ),
-          title: Text('MINHA COMPOSTEIRA',
-              style: GoogleFonts.raleway(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-                color: Color.fromRGBO(10, 10, 10, 100.0),
+            backgroundColor: Colors.white,
+            bottom: TabBar(
+              onTap: (index){
+                setState(() {
+                  _selectedItem = index;
+                });
+              },
+              labelPadding: EdgeInsets.only(top: 15.0),
+              indicatorWeight: 4,
+              indicatorPadding: EdgeInsets.symmetric(horizontal: 35.0),
+              indicatorColor:  _colors[_selectedItem],
+              unselectedLabelColor: Color.fromRGBO(190, 190, 190, 100.0),
+              labelColor: _colors[_selectedItem],
+              tabs: myTabs,
+            ),
+            title: Padding(
+              padding: EdgeInsets.only(top: 15.0),
+              child: Text(
+                'MINHA COMPOSTEIRA',
+                style: GoogleFonts.raleway(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: Color.fromRGBO(10, 10, 10, 100.0),
+                ),
               ),
-          ),
+            )
         ),
         body: TabBarView(
           children: [

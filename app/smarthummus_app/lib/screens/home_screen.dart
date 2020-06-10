@@ -9,13 +9,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _page = FeedScreen();
+
+  List<Widget> _pages = [FeedScreen(), Container(color: Colors.blue), ComposterScreen(), Container(color: Colors.purple), Container(color: Colors.orange)];
   final color = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _page,
+        body: _pages[_selectedindex],
         bottomNavigationBar: Container(
           color: color,
           child: Container(
@@ -66,21 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void _tapped(int index) {
     setState(() {
       _selectedindex = index;
-
-      switch (index) {
-        case 0:
-          _page = FeedScreen();
-          break;
-
-        case 1:
-          _page = Container(color: Colors.blue);
-          break;
-
-        case 2:
-          _page = ComposterScreen();
-          break;
-
-      }
     });
   }
 }
