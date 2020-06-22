@@ -51,13 +51,10 @@ class FeedScreen extends StatelessWidget {
                             ),
                           ])),
                   Flexible(fit: FlexFit.tight, child: SizedBox()),
-                  Padding(
-                      padding: EdgeInsets.only(top: 5.0),
-                      child: Image(
+                      Image(
                         image: AssetImage('assets/images/folhas.png'),
                         fit: BoxFit.cover,
-                        width: 230,
-                      ))
+                        width: 230,)
                 ]),
               ),
             ),

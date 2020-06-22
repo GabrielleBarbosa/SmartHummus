@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
+import 'package:smarthummusapp/screens/humidity_screen.dart';
+import 'package:smarthummusapp/screens/temperature_screen.dart';
+
+import 'gases_screen.dart';
 
 class ComposterScreen extends StatefulWidget {
   @override
@@ -9,12 +14,12 @@ class ComposterScreen extends StatefulWidget {
 class _ComposterScreenState extends State<ComposterScreen> {
 
   final List<Widget> myTabs = <Widget>[
-    Tab(icon: Icon(Icons.add, size: 35.0,)),
-    Tab(icon: Icon(Icons.add, size: 35.0)),
-    Tab(icon: Icon(Icons.add, size: 35.0))
+    Tab(icon: Icon(SmartHummusIcons.water, size: 35.0)),
+    Tab(icon: Icon(SmartHummusIcons.thermometer, size: 35.0)),
+    Tab(icon: Icon(SmartHummusIcons.gas, size: 35.0,)),
   ];
 
-  final List<Color> _colors = [Colors.grey, Colors.lightBlue, Colors.orange];
+  final List<Color> _colors = [Color.fromRGBO(0, 179, 224, 100.0), Color.fromRGBO(255, 118, 0, 100.0), Color.fromRGBO(152, 189, 88, 100.0)];
   int _selectedItem = 0;
 
   @override
@@ -52,33 +57,9 @@ class _ComposterScreenState extends State<ComposterScreen> {
         ),
         body: TabBarView(
           children: [
-            new Container(
-              color: Colors.deepOrangeAccent,
-              child: new Center(
-                child: new Text(
-                  "Primeira Guia",
-                  style: TextStyle(),
-                ),
-              ),
-            ),
-            new Container(
-              color: Colors.blueGrey,
-              child: new Center(
-                child: new Text(
-                  "Segunda guia",
-                  style: TextStyle(),
-                ),
-              ),
-            ),
-            new Container(
-              color: Colors.teal,
-              child: new Center(
-                child: new Text(
-                  "Terceira guia",
-                  style: TextStyle(),
-                ),
-              ),
-            ),
+            HumidityScreen(),
+            TemperatureScreen(),
+            GasesScreen(),
           ],
         ),
       ),

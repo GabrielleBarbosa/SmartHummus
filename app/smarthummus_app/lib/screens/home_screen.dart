@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 
 import 'composter_screen.dart';
@@ -36,16 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
               child: BottomNavigationBar(
                 items: [
                   BottomNavigationBarItem(
-                      title: Text(""), icon: Icon(Icons.home)),
+                      title: Text(""), icon: Icon(SmartHummusIcons.home)),
                   BottomNavigationBarItem(
-                      title: Text(""), icon: Icon(Icons.add_shopping_cart)),
+                      title: Text(""), icon: Icon(SmartHummusIcons.shopping_cart)),
                   BottomNavigationBarItem(
                       title: Text(""),
-                      icon: Icon(Icons.check_box_outline_blank, size: 60)),
+                      icon: Icon(SmartHummusIcons.composter, size: 60)),
                   BottomNavigationBarItem(
-                      title: Text(""), icon: Icon(Icons.monetization_on)),
+                      title: Text(""), icon: Icon(SmartHummusIcons.pig)),
                   BottomNavigationBarItem(
-                      title: Text(""), icon: Icon(Icons.person)),
+                      title: Text(""), icon: Icon(SmartHummusIcons.person)),
                 ],
                 backgroundColor: Colors.white,
                 elevation: 1200,
