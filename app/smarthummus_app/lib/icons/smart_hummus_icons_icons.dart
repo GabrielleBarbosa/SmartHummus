@@ -21,12 +21,12 @@ class SmartHummusIcons {
   static const _kFontFam = 'SmartHummusIcons';
   static const _kFontPkg = null;
 
-  static const IconData composter = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData pig = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData water = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData gas = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData person = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData shopping_cart = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData thermometer = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData composter = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData shopping_cart = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData thermometer = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
