@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:smarthummusapp/cards/chart_card.dart';
+import 'package:smarthummusapp/cards/warnings_card.dart';
 
 class TemperatureScreen extends StatefulWidget {
   @override
@@ -14,7 +16,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SingleChildScrollView(
+      child: Container(
         child: Padding(
       padding: EdgeInsets.only(top: 30.0, left: 30.0),
       child: Column(
@@ -92,9 +95,11 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
                 ),
               ),
             ),
-          )
+          ),
+          ChartCard(),
+          WarningsCard()
         ],
       ),
-    ));
+    )));
   }
 }

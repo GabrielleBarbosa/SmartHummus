@@ -29,4 +29,8 @@ class SmartHummusIcons {
   static const IconData composter = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData shopping_cart = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData thermometer = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData problem = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData alert = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData alright = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData leaf = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
