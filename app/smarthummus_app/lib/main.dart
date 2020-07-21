@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smarthummusapp/screens/home_screen.dart';
+import 'package:smarthummusapp/screens/sign_in_screen.dart';
 import 'package:smarthummusapp/screens/sign_up_screen.dart';
 
 class SmartHummusApp extends StatelessWidget {
@@ -12,18 +13,19 @@ class SmartHummusApp extends StatelessWidget {
         primaryColor: Color.fromARGB(255, 4, 125, 141), //a, r, g, b
         fontFamily: 'Raleway',
         inputDecorationTheme: InputDecorationTheme(
+            focusColor: Color.fromRGBO(136, 240, 0, 1.0),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: Color.fromRGBO(143, 255, 0, 1.0), width: 3.0),
+                  color: Color.fromRGBO(136, 240, 0, 1.0), width: 3.0),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  color: Color.fromRGBO(143, 255, 0, 1.0), width: 3.0),
+                  color: Color.fromRGBO(136, 240, 0, 1.0), width: 3.0),
             )
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SignUpScreen(),
+      home: SignInScreen(),
     );
   }
 }
