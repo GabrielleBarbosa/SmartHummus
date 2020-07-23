@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
+import 'package:smarthummusapp/screens/feed_screen.dart';
+import 'package:smarthummusapp/screens/home_screen.dart';
+import 'package:smarthummusapp/screens/humidity_screen.dart';
 import 'package:smarthummusapp/screens/sign_up_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -121,7 +124,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             fontWeight: FontWeight.w600, fontSize: 16),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreen()),
+                      );
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
