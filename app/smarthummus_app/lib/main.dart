@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smarthummusapp/screens/home_screen.dart';
 import 'package:smarthummusapp/screens/introduction_screen.dart';
+import 'package:smarthummusapp/screens/manage_perfil_screen.dart';
 import 'package:smarthummusapp/screens/sign_in_screen.dart';
 import 'package:smarthummusapp/screens/sign_up_screen.dart';
+import 'package:smarthummusapp/widgets/custom_drawer.dart';
 
 class SmartHummusApp extends StatelessWidget {
   @override
@@ -26,7 +28,7 @@ class SmartHummusApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: IntroductionScreen(),
+      home: ManagePerfilScreen(),
     );
   }
 }
