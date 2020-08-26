@@ -7,13 +7,13 @@ const int pinoLed = 12; //PINO DIGITAL UTILIZADO PELO LED
 int dadoBluetooth = 0; //VARIÁVEL QUE ARMAZENA O VALOR ENVIADO PELO BLUETOOTH
 boolean loopLED = false; //VARIÁVEL BOOLEANA QUE FAZ O CONTROLE DE ATIVAÇÃO DO LOOP DO LED
 
-//SoftwareSerial bluetooth(pinoTX, pinoRX); //PINOS QUE EMULAM A SERIAL, ONDE
+SoftwareSerial bluetooth(pinoTX, pinoRX); //PINOS QUE EMULAM A SERIAL, ONDE
 //O PINO 2 É O RX E O PINO 3 É O TX
 
 // WiFi
 SoftwareSerial wifi(8,9);
-char ssid[] = "cotuca";
-char pass[] = "cotuca19";
+char ssid[] = "nomeWiFi";
+char pass[] = "senhaWiFi";
 int status = WL_IDLE_STATUS;
 
 WiFiEspServer server(80);
@@ -21,14 +21,14 @@ RingBuffer buf(8);
  
 void setup(){
   Serial.begin(115200); //INICIALIZA A SERIAL
-  //bluetooth.begin(9600); //INICIALIZA A SERIAL DO BLUETOOTH
+  bluetooth.begin(9600); //INICIALIZA A SERIAL DO BLUETOOTH
   //bluetooth.print("$"); //IMPRIME O CARACTERE
   //bluetooth.print("$"); //IMPRIME O CARACTERE
   //bluetooth.print("$"); //IMPRIME O CARACTERE
   delay(100); //INTERVALO DE 100 MILISSEGUNDOS
   pinMode(pinoLed, OUTPUT); //DEFINE O PINO COMO SAÍDA
 
-  wifi.begin(9600);
+  /*wifi.begin(9600);
   WiFi.init(&wifi);
   if (WiFi.status() == WL_NO_SHIELD)
   {
@@ -43,7 +43,7 @@ void setup(){
   Serial.println("Conectado...");
   IPAddress ip = WiFi.localIP();
   Serial.println(ip);
-  server.begin();
+  server.begin();*/
 }
  
 void loop(){
@@ -64,7 +64,7 @@ void loop(){
     }
   }*/
 
-  WiFiEspClient client = server.available();
+  /*WiFiEspClient client = server.available();
   if (client)
   {
     Serial.println("Novo cliente");
@@ -87,7 +87,7 @@ void loop(){
     }
     client.stop();
     Serial.println("Desconectado...");
-  }
+  }*/
 }
 
 void sendHttpResponse(WiFiEspClient client)
