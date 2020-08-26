@@ -3,8 +3,8 @@
 
 SoftwareSerial Serial1(8,9);      //INICIA A PORTA SERIAL
 
-char ssid[] = "TSEVR";           //VETOR DE CHAR (STRING) GUARDANDO ID DA REDE
-char pass[] = "18171123";         //VETOR DE CHAR (STRING) GUARDANDO SENHA DA REDE
+char ssid[] = "nomeDoWiFi";           //VETOR DE CHAR (STRING) GUARDANDO ID DA REDE
+char pass[] = "senhaDoWiFi";         //VETOR DE CHAR (STRING) GUARDANDO SENHA DA REDE
 int status = WL_IDLE_STATUS;      //VARIAVEL QUE GUARDA O STATUS DA CONEXAO DA REDE
 
 WiFiEspServer server(80);         //INICIA O SERVIDOR NA PORTA 80
