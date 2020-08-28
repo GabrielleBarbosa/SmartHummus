@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "577300190569",
+    "firebase_url": "https://smarthummus.firebaseio.com",
+    "project_id": "smarthummus",
+    "storage_bucket": "smarthummus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577300190569:android:6ef8f88871302c68f459f8",
+        "android_client_info": {
+          "package_name": "com.example.smarthummusapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "577300190569-k1ue5df005mdot584pl8rnm1cetbkujb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smarthummusapp",
+            "certificate_hash": "f78d3e4a5d3aabf425a9163e90bd014a469b6fec"
+          }
+        },
+        {
+          "client_id": "577300190569-ibb912u26dve30dpet20nj77pnk7nf38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgloTrw207nSiH7GIAKdMJruY8GY3792Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "577300190569-ibb912u26dve30dpet20nj77pnk7nf38.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

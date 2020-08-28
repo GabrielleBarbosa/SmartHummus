@@ -7,6 +7,7 @@ import 'package:smarthummusapp/screens/sign_up_screen.dart';
 import 'package:smarthummusapp/widgets/custom_drawer.dart';
 
 class SmartHummusApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +29,7 @@ class SmartHummusApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: ManagePerfilScreen(),
+      home: SignInScreen(),
     );
   }
 }

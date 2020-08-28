@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 import 'package:smarthummusapp/screens/home_screen.dart';
@@ -12,9 +14,22 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void logInGoogle() async{
+
+    FirebaseUser user = await Database.getUser();
+    if(user != null)
+      Navigator.push(context, MaterialPageRoute (builder: (context) => HomeScreen()));
+      //debugPrint(Database.idToken);
+    else
+      scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Não foi possível fazer o login")));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,7 +173,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             )
                           ]),
                     ),
-                    onPressed: () {},
+                    onPressed: logInGoogle,
                   ),
                   RaisedButton(
                     shape: RoundedRectangleBorder(
