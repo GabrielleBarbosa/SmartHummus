@@ -5,7 +5,7 @@ int cont=0;
 int val=0;
 
 #define TARGET_IP "192.168.137.1"
-#define TARGET_PORT "12345"     
+#define TARGET_PORT "80"     
     
 #define ID "HKSP65 2G"  //name of wireless access point to connect to
 #define PASS "40045912"  //wifi password

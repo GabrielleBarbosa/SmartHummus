@@ -7,7 +7,7 @@ SoftwareSerial esp(8, 9);// RX, TX
 
 String data;
 
-String server = "http://192.168.137.1"; // www.example.com
+String server = "192.168.137.1"; // www.example.com
 
 String uri = "/pao";// our example is /esppost.php
 
@@ -149,9 +149,18 @@ delay(1000);
 
 void httppost () {
 
+esp.println("AT+CIPMUX=1");//start a TCP connection.
+Serial.println(esp.read());
+
 esp.println("AT+CIPSTART=\"TCP\",\"" + server + "\",80");//start a TCP connection.
 
-//Serial.print("AT+CIPSTART=\"TCP\",\"" + server + "\",80");
+//Serial.println("AT+CIPSTART=\"TCP\",\"" + server + "\",80");
+
+if(esp.find("Error"))
+{
+    Serial.println("AT+CIPSTART error");
+    return;
+}
 
 if(esp.find("OK")) {
 
