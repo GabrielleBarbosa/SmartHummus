@@ -5,6 +5,8 @@ import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 
+import 'home_screen.dart';
+
 class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -15,6 +17,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController cpasswordController = TextEditingController();
+
+  void _signUp() async{
+    String email = emailController.text, pass = passwordController.text, cpass = cpasswordController.text;
+    if(email!= "" && pass!= "" && cpass!="") {
+      if(pass == cpass) {
+        if(email.contains("@")) {
+            FirebaseUser user = await Database.signUp(email, pass);
+            if(user != null) {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()));
+            }
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,14 +130,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           )
                                         ],
                                       )),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => SignUpScreen()),
-                                    );
-                                  },
+                                  onPressed: _signUp
+                                  ,
                                 ),
                               )
                             ],
@@ -160,6 +172,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: SizedBox(
                 width: 180,
                 child: TextField(
+                  controller: controller,
                   obscureText: isHidden,
                   decoration: InputDecoration(
                     labelText: title,

@@ -15,15 +15,36 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  TextEditingController emailController = TextEditingController(), passwordController = TextEditingController();
   void logInGoogle() async{
 
-    FirebaseUser user = await Database.getUser();
-    if(user != null)
-      Navigator.push(context, MaterialPageRoute (builder: (context) => HomeScreen()));
+    FirebaseUser user = await Database.signInGoogle();
+    if(user != null) {
+
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
       //debugPrint(Database.idToken);
     else
       scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Não foi possível fazer o login")));
+  }
+
+  void logInEmailPass() async{
+    String email = emailController.text, pass = passwordController.text;
+    FirebaseUser user = await Database.getUser();
+    debugPrint((user==null).toString());
+    if(email!= "" ){
+        if(email.contains("@")) {
+          FirebaseUser user = await Database.signInEmailPass(email, pass);
+          if(user != null) {
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => HomeScreen()));
+
+        }
+      }
+    }
   }
 
   @override
@@ -85,6 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: SizedBox(
                           width: 220,
                           child: TextField(
+                            controller: emailController,
                             decoration: InputDecoration(
                               labelText: 'E-mail',
                             ),
@@ -106,6 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: SizedBox(
                           width: 220,
                           child: TextField(
+                            controller: passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Senha',
@@ -139,13 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             fontWeight: FontWeight.w600, fontSize: 16),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen()),
-                      );
-                    },
+                    onPressed: logInEmailPass,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),

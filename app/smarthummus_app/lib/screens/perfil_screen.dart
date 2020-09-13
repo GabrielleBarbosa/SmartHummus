@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
+import 'package:smarthummusapp/screens/sign_in_screen.dart';
 
 class PerfilScreen extends StatefulWidget {
   @override
@@ -10,6 +12,15 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
+
+  void _signOut() async{
+    bool logOut = await Database.signOut();
+    if(logOut){
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute (builder: (context) => SignInScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -19,11 +30,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
           children: <Widget>[
             Container(
               color: Colors.transparent,
-              height: 150.0,
+              height: 170.0,
             ),
             Container(
               color: Color.fromRGBO(136, 240, 0, 1.0),
-              height: 75.0,
+              height: 85.0,
             ),
             Positioned.fill(
                 child: Align(
@@ -113,7 +124,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               fontWeight: FontWeight.w800,
                               color: Color.fromRGBO(55, 55, 55, 0.65)),
                         ),
-                      ))
+                      )),
+                  RaisedButton(
+                    child: Text("Sair"),
+                    onPressed: _signOut,
+                  )
                 ],
               ),
             ),

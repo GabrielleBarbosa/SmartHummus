@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
+import 'package:smarthummusapp/screens/perfil_screen.dart';
 
 import 'composter_screen.dart';
 
@@ -11,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  List<Widget> _pages = [FeedScreen(), Container(color: Colors.blue), ComposterScreen(), Container(color: Colors.purple), Container(color: Colors.orange)];
+  static List<Widget> _pages = [FeedScreen(), Container(color: Colors.blue), ComposterScreen(), Container(color: Colors.purple), PerfilScreen()];
   final color = Colors.white;
 
   @override

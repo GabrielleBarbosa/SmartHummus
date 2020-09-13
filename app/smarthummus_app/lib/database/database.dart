@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Database {
-  static FirebaseUser user;
-  static String idToken;
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   static Future<FirebaseUser> getUser() async{
-    if(user != null) return user;
+    return await FirebaseAuth.instance.currentUser();
+  }
+
+  static Future<FirebaseUser> signInGoogle() async{
     try{
       final GoogleSignInAccount googleSignInAccount =
       await _googleSignIn.signIn();
@@ -19,16 +21,43 @@ class Database {
           accessToken: googleSignInAuthentication.accessToken
       );
 
-      idToken = googleSignInAuthentication.accessToken;
       final AuthResult authResult =
       await FirebaseAuth.instance.signInWithCredential(credential);
 
-      user = authResult.user;
-
-      return user;
+      return authResult.user;
     }catch(e){
-      user = null;
       return null;
+    }
+  }
+
+  static Future<FirebaseUser> signUp(String email, String password) async{
+      try{
+        final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+        return authResult.user;
+      }catch(e){
+        debugPrint(e.toString());
+        return null;
+      }
+  }
+
+  static Future<FirebaseUser> signInEmailPass(String email, String password) async{
+    try{
+      final authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      return authResult.user;
+    }catch(e){
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+
+  static Future<bool> signOut() async{
+    try {
+      await FirebaseAuth.instance.signOut();
+      _googleSignIn.signOut();
+      return true;
+    }
+    catch(e){
+      return false;
     }
   }
 }
