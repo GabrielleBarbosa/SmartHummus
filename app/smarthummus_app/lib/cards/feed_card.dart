@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FeedCard extends StatefulWidget {
-  final String title, headline;
+  final String title, headline, urlToImage;
 
-  FeedCard(this.title, this.headline);
+  FeedCard(this.title, this.headline, this.urlToImage);
 
   @override
-  _FeedCardState createState() => _FeedCardState(this.title, this.headline);
+  _FeedCardState createState() => _FeedCardState(this.title, this.headline, this.urlToImage);
 }
 
 class _FeedCardState extends State<FeedCard> {
-  String title, headline;
-  Image image;
-  _FeedCardState(this.title, this.headline);
+  String title, headline, urlToImage;
+  _FeedCardState(this.title, this.headline, this.urlToImage);
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +26,9 @@ class _FeedCardState extends State<FeedCard> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  title.toUpperCase(),
+                  title,
                   style: GoogleFonts.raleway(
-                    fontSize: 23,
+                    fontSize: 20,
                     fontWeight: FontWeight.w800,
                     color: Color.fromRGBO(40, 40, 40, 100.0),
                   ),
@@ -43,6 +42,12 @@ class _FeedCardState extends State<FeedCard> {
                   child: Container(
                     color: Color.fromRGBO(226, 233, 235, 100.0),
                     height: 200,
+                    child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                        child: urlToImage != null ? Image.network(urlToImage):Container(),
+                    )),
                   )),
             )
           ],

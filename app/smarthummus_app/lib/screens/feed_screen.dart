@@ -4,12 +4,56 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smarthummusapp/cards/feed_card.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/news/news_article.dart';
+import 'package:smarthummusapp/news/web_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class FeedScreen extends StatelessWidget {
+class FeedScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
+  _FeedScreenState createState() => _FeedScreenState();
+}
+
+class _FeedScreenState extends State<FeedScreen> {
+
+  List<NewsArticle> _newsArticles = List<NewsArticle>();
+  Future<void> _launched;
+
+  @override
+  void initState() {
+    super.initState();
+    _populateNewsArticles();
+  }
+
+  void _populateNewsArticles() {
+
+    Webservice().load(NewsArticle.all).then((newsArticles) => {
+      setState(() => {
+        _newsArticles = newsArticles
+      })
+    });
+
+  }
+
+  Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  GestureDetector _buildItemsForListView(BuildContext context, int index){
+    return
+      GestureDetector(
+        onTap: () => setState(() {
+          _launched = _launchInBrowser(_newsArticles[index].url);
+        }),
+        child: FeedCard(_newsArticles[index].title, _newsArticles[index].description, _newsArticles[index].urlToImage),
+      );
+  }
+
+  Widget _cabecalho(){
+    return Column(
       children: [
         Container(
           color: Colors.transparent,
@@ -51,34 +95,41 @@ class FeedScreen extends StatelessWidget {
                             ),
                           ])),
                   Flexible(fit: FlexFit.tight, child: SizedBox()),
-                      Image(
-                        image: AssetImage('assets/images/folhas.png'),
-                        fit: BoxFit.cover,
-                        width: 230,)
+                  Image(
+                    image: AssetImage('assets/images/folhas.png'),
+                    fit: BoxFit.cover,
+                    width: 230,)
                 ]),
               ),
             ),
           ),
         ),
-        Column(
-          children: [
-            Padding(
-                padding: EdgeInsets.only(top: 30.0, bottom: 30.0),
-                child: Text(
-                  "FEED",
-                  style: GoogleFonts.raleway(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w800,
-                    color: Color.fromRGBO(55, 55, 55, 100.0)
-                  ),
-                  textAlign: TextAlign.center,
-                )),
-            FeedCard("Notícias", "Meio Ambiente"),
-            FeedCard("Notícias", "Meio Ambiente"),
-            FeedCard("Notícias", "Meio Ambiente")
-          ],
-        ),
+        Padding(
+            padding: EdgeInsets.only(top: 30.0, bottom: 30.0),
+            child: Text(
+              "FEED",
+              style: GoogleFonts.raleway(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w800,
+                  color: Color.fromRGBO(55, 55, 55, 100.0)
+              ),
+              textAlign: TextAlign.center,
+            )),
       ],
-    ));
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+            itemCount: _newsArticles.length+1,
+            itemBuilder: (context, index){
+              if(index == 0)
+                return _cabecalho();
+              return _buildItemsForListView(context, index-1);
+            },
+    );
+
   }
 }
+
