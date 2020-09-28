@@ -4,7 +4,7 @@
 #include <SoftwareSerial.h>
 
 /*
- * AT+CWJAP="nomeDaRede","senhaDaRede"
+ * AT+CWJAP="HKSP65 2G","40045912"
  * AT+CWJAP?
  * AT+CIPMUX=1
  * AT+CIPSTART=4,"TCP","www.google.com",80
