@@ -1,12 +1,3 @@
-/*
- WiFiEsp example: WebClient
-
- This sketch connects to google website using an ESP8266 module to
- perform a simple web search.
-
- For more details see: http://yaab-arduino.blogspot.com/p/wifiesp-example-client.html
-*/
-
 #include "WiFiEsp.h"
 
 // Emulate Serial1 on pins 6/7 if not present
@@ -15,11 +6,11 @@
 SoftwareSerial Serial1(8, 9); // RX, TX
 #endif
 
-char ssid[] = "HKSP65 2G";            // your network SSID (name)
-char pass[] = "40045912";        // your network password
-int status = WL_IDLE_STATUS;     // the Wifi radio's status
+char ssid[] = "nomeDoWiFi";            // your network SSID (name)
+char pass[] = "senhaDoWiFi";           // your network password
+int status = WL_IDLE_STATUS;           // the Wifi radio's status
 
-char server[] = "https://firestore.googleapis.com";
+char server[] = "IPdoPython";
 
 // Initialize the Ethernet client object
 WiFiEspClient client;
@@ -59,11 +50,7 @@ void setup()
   if (client.connect(server, 80)) {
     Serial.println("Connected to server");
     // Make a HTTP request
-    client.println("GET /v1beta1/projects/smarthummus/databases/(default)/documents/users/OMQNCYa3qltTRjDD2rX8 HTTP/1.1");
-    client.println("Content-Type: application/json");
-    client.println("Host: firestore.googleapis.com");
-    client.println("Key: AIzaSyDDThVvvIeghp-mo-QzSnj-9aKcplJ8Cx0");
-    client.println("Authorization: Bearer AAAAhmnF1Wk:APA91bGdiMCfmGBb9bwcaLd6STGVCKQvkTD0NkLYCJ7N0aJ89_QjwDaeHzGSaDy-uMo4onS6_hoGRD4yOdbo66IhRUK2W4t_jdzPX5eegQxKl26fNJBx377fsVOpYEu9lXhjDnmbQjuF");
+    client.println("GET /teste HTTP/1.1");
     client.println("Connection: close");
     client.println();
   }

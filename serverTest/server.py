@@ -4,7 +4,7 @@ import socket
 #teste2: 192.168.56.1
 #teste3: 10.0.0.100
 
-HOST = '192.168.137.1' # endereço do servidor 
+HOST = ''              # endereço do servidor local
 PORT =  80             # porta desejada
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s: # "cria o socket"
