@@ -8,6 +8,7 @@ class ChartCard extends StatefulWidget {
 
 class _ChartCardState extends State<ChartCard> {
   String dropdownValue = "ÚLTIMAS 24 HORAS";
+  num values;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,7 @@ class _ChartCardState extends State<ChartCard> {
                               dropdownValue = newValue;
                             });
                           },
-                          items: <String>['ÚLTIMAS 24 HORAS', 'ÚLTIMOS 7 DIAS']
+                          items: <String>['ÚLTIMAS 24 HORAS', 'ÚLTIMOS 7 DIAS','ÚLTIMO MÊS']
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,

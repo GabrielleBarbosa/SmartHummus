@@ -23,7 +23,7 @@ class NewsArticle {
   static Resource<List<NewsArticle>> get all {
 
     return Resource(
-        url: "http://newsapi.org/v2/everything?q=sustainability+environment&sortBy=publishedAt&apiKey=e6914ff243274c6a8b3a8362395a3ab6",
+        url: "https://newsapi.org/v2/everything?q=sustentabilidade&apiKey=e6914ff243274c6a8b3a8362395a3ab6&language=pt&domains=globo.com,uol.com.br&sortBy=date",
         parse: (response) {
           final result = json.decode(response.body);
           Iterable list = result['articles'];
