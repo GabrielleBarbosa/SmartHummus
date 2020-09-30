@@ -18,22 +18,23 @@ import socket
 import os
 import serial
  
-HOST = '192.168.137.1'
+HOST = '10.0.0.112'
 PORTA = 80
  
 tcpSOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 destinoCONEXAO = (HOST, PORTA)
 tcpSOCKET.connect(destinoCONEXAO)
  
-os.system("clear")
-print "|====================================|"
-print "|    Arduino na rede usando Python   |"
-print "|====================================|"
-print "| Digite SAIR para teminar a conexao |"
+# os.system("clear")
+print ("|====================================|")
+print ("|    Arduino na rede usando Python   |")
+print ("|====================================|")
+print ("| Digite SAIR para teminar a conexao |")
  
-dados = raw_input()
+dados = input()
  
 while dados != 'SAIR':
     tcpSOCKET.send (dados)
-    dados = raw_input()
+    dados = input()
+    print(dados)
 tcpSOCKET.close()
