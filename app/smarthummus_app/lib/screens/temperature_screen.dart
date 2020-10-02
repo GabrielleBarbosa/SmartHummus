@@ -14,6 +14,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
   double temperatureValue = 35;
   String temperatureText = "35°C";
 
+  List<double> values = [26.0,27.0,30.0,32.0,30.0,28.0,29.0];
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -96,7 +98,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
               ),
             ),
           ),
-          ChartCard(),
+          ChartCard(values),
           WarningsCard()
         ],
       ),

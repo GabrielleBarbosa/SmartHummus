@@ -12,6 +12,7 @@ class HumidityScreen extends StatefulWidget {
 class _HumidityScreenState extends State<HumidityScreen> {
 
   double humidityValue = 0.4;
+  List<double> values = [50,50,56,70,69,30,35];
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
                     ),
                   ),
                 ),
-                ChartCard(),
+                ChartCard(values),
                 WarningsCard()
               ],
             ),

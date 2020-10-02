@@ -12,6 +12,7 @@ class GasesScreen extends StatefulWidget {
 class _GasesScreenState extends State<GasesScreen> {
 
   double flammableValue = 0.4;
+  List<double> values = [40,50,30,40,45,55];
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class _GasesScreenState extends State<GasesScreen> {
                     ),
                   ),
                 ),
-                ChartCard(),
+                ChartCard(values),
                 WarningsCard()
               ],
             ),
