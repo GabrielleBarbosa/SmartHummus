@@ -15,4 +15,5 @@ void loop(){
   }else{
     Serial.println("Cheio");
   }
+  delay(1000);
 }
