@@ -36,7 +36,7 @@ class _ChartCardState extends State<ChartCard> {
       LineChartBarData(
           spots: allSpots,
           isCurved: true,
-          barWidth: 4,
+          barWidth: 2,
           shadow: const Shadow(
             blurRadius: 8,
             color: Colors.black,
@@ -59,7 +59,10 @@ class _ChartCardState extends State<ChartCard> {
             0.1,
             0.4,
             0.9
-          ]),
+          ],
+
+
+      ),
     ];
   }
 
@@ -116,12 +119,20 @@ class _ChartCardState extends State<ChartCard> {
                         )
                       ],
                     ),
-                    LineChart(
-                      LineChartData(
-                        // read about it in the below section
-                        lineBarsData: lineBarsData
+                    Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: LineChart(
+                        LineChartData(
+                          // read about it in the below section
+                            lineBarsData: lineBarsData,
+                            titlesData: FlTitlesData(leftTitles: SideTitles(
+                                interval: 5,
+                                showTitles: true))
+
+                        ),
                       ),
                     )
+
                   ],
                 ),
               ),
