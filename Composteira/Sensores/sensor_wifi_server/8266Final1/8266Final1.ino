@@ -120,11 +120,11 @@ void loop() {
 
   if ((millis()-starttime) > sampletime_ms)//if the sampel time == 30s
   {
- //   String server = "10.0.0.107"; // www.example.com
-    String uri = "rest1.php";// our example is /esppost.php
-    String send1 = "GET /"+uri+" HTTP/1.1 \r\n\r\n"  ;//
+    String uri = "temp1=9/temp2=19/umid1=90/umid2=60/nivel=0/gasMQ2=200/gasMQ135=900/uid=X2wY40NBg6VB6UMLARIiezxJmbT2/email=cc18183@g.unicamp.br";// our example is /esppost.php
+    //String uri = "rest1.php";// our example is /esppost.php
+    String send1 = "GET /"+uri+" HTTP/1.1 \r\n\r\n";    
     String resp = "";
-    String server = "10.0.0.101"; // www.example.com
+    String server = "10.0.0.107"; // www.example.com
     String resp2 = "";
 
     String openSocketCommand = "AT+CIPSTART=3,\"TCP\",\"" + server + "\",8080\r\n";//start a TCP connection.
