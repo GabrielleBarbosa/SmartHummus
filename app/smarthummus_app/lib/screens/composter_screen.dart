@@ -15,10 +15,10 @@ class ComposterScreen extends StatefulWidget {
 class _ComposterScreenState extends State<ComposterScreen> {
 
   final List<Widget> myTabs = <Widget>[
-    Tab(icon: Icon(SmartHummusIcons.leaf, size: 25.0)),
-    Tab(icon: Icon(SmartHummusIcons.water, size: 35.0)),
-    Tab(icon: Icon(SmartHummusIcons.thermometer, size: 35.0)),
-    Tab(icon: Icon(SmartHummusIcons.gas, size: 35.0,)),
+    Tab(icon: Icon(SmartHummusIcons.leaf, size: 20.0)),
+    Tab(icon: Icon(SmartHummusIcons.water, size: 30.0)),
+    Tab(icon: Icon(SmartHummusIcons.thermometer, size: 30.0)),
+    Tab(icon: Icon(SmartHummusIcons.gas, size: 30.0,)),
   ];
 
   final List<Color> _colors = [Color.fromRGBO(143, 255, 0, 100.0), Color.fromRGBO(0, 179, 224, 100.0), Color.fromRGBO(255, 118, 0, 100.0), Color.fromRGBO(161, 17, 245, 100.0)];

@@ -1,22 +1,28 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/database/measures.dart';
+
 
 class ChartCard extends StatefulWidget {
 
-  List<double> valores;
+  List<Measures> valores;
+  String tipo;
+  Color cor1, cor2;
 
-  ChartCard(this.valores);
+  ChartCard(this.valores, this.tipo, this.cor1, this.cor2);
 
   @override
-  _ChartCardState createState() => _ChartCardState(this.valores);
+  _ChartCardState createState() => _ChartCardState(this.valores, this.tipo, this.cor1, this.cor2);
 }
 
 class _ChartCardState extends State<ChartCard> {
   String dropdownValue = "ÚLTIMAS 24 HORAS";
-  List<double> valores;
+  List<Measures> valores;
+  String tipo;
+  Color cor1, cor2;
 
-  _ChartCardState(this.valores);
+  _ChartCardState(this.valores, this.tipo, this.cor1, this.cor2);
 
   List<FlSpot> allSpots = List<FlSpot>();
 
@@ -27,8 +33,28 @@ class _ChartCardState extends State<ChartCard> {
     // TODO: implement initState
     super.initState();
     num i = 1.0;
-    for(num val in valores){
-      allSpots.add(FlSpot(i, val));
+    for(Measures mer in valores){
+      switch(tipo){
+        case "tempA":
+          allSpots.add(FlSpot(i, mer.tempA));
+          break;
+        case "tempB":
+          allSpots.add(FlSpot(i, mer.tempB));
+          break;
+        case "humA":
+          allSpots.add(FlSpot(i, mer.humA));
+          break;
+        case "humB":
+          allSpots.add(FlSpot(i, mer.humB));
+          break;
+        case "gasMQ2":
+          allSpots.add(FlSpot(i, mer.gasMQ2));
+          break;
+        case "gasMQ135":
+          allSpots.add(FlSpot(i, mer.gasMQ135));
+          break;
+      }
+
       i++;
     }
 
@@ -37,30 +63,22 @@ class _ChartCardState extends State<ChartCard> {
           spots: allSpots,
           isCurved: true,
           barWidth: 2,
-          shadow: const Shadow(
-            blurRadius: 8,
-            color: Colors.black,
-          ),
           belowBarData: BarAreaData(
             show: true,
             colors: [
-              const Color(0xff12c2e9).withOpacity(0.4),
-              const Color(0xffc471ed).withOpacity(0.4),
-              const Color(0xfff64f59).withOpacity(0.4),
+              cor1.withOpacity(0.4),
+              cor2.withOpacity(0.4),
             ],
           ),
           dotData: FlDotData(show: false),
           colors: [
-            const Color(0xff12c2e9),
-            const Color(0xffc471ed),
-            const Color(0xfff64f59),
+            cor1,
+            cor2,
           ],
           colorStops: [
-            0.1,
-            0.4,
-            0.9
+            0.2,
+            0.8,
           ],
-
 
       ),
     ];

@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smarthummusapp/cards/chart_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
+import 'package:smarthummusapp/database/database.dart';
+import 'package:smarthummusapp/database/measures.dart';
 
 class GasesScreen extends StatefulWidget {
   @override
@@ -34,7 +36,7 @@ class _GasesScreenState extends State<GasesScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: LinearPercentIndicator(
-                    width: 220.0,
+                    width: MediaQuery.of(context).size.width / 2.3,
                     lineHeight: 23.0,
                     percent: flammableValue,
                     backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
@@ -48,7 +50,16 @@ class _GasesScreenState extends State<GasesScreen> {
                     ),
                   ),
                 ),
-                ChartCard(values),
+                FutureBuilder<List<Measures>>(
+                  future: Database.getMeasures(),
+                  builder: (context, measures) {
+                    if (!measures.hasData)
+                      return Center(child: CircularProgressIndicator());
+                    else {
+                      return Column(children: [ChartCard(measures.data, "gasMQ2", Color(0xff12c2e9), Color(0xffc471ed)),ChartCard(measures.data, "gasMQ135", Color(0xff12c2e9), Color(0xffc471ed))],);
+                    }
+                  },
+                ),
                 WarningsCard()
               ],
             ),

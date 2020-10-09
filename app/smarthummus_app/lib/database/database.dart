@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'measures.dart';
 
 class Database {
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -59,5 +62,16 @@ class Database {
     catch(e){
       return false;
     }
+  }
+
+  static Future<List<Measures>> getMeasures() async{
+    String uid = await getUser().then((value) => value.uid);
+    QuerySnapshot allData = await Firestore.instance.collection("medidas").getDocuments();
+    List<Measures> measures = List<Measures>();
+    allData.documents.forEach((element) {
+      if(element.data['uid'] == uid)
+         measures.add(Measures.fromDocument(element));
+    });
+    return measures;
   }
 }

@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: Text(""), icon: Icon(SmartHummusIcons.shopping_cart)),
                   BottomNavigationBarItem(
                       title: Text(""),
-                      icon: Icon(SmartHummusIcons.composter, size: 60)),
+                      icon: Icon(SmartHummusIcons.composter, size: 40)),
                   BottomNavigationBarItem(
                       title: Text(""), icon: Icon(SmartHummusIcons.pig)),
                   BottomNavigationBarItem(
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Colors.white,
                 elevation: 1200,
                 type: BottomNavigationBarType.fixed,
-                iconSize: 35,
+                iconSize: 20,
                 showSelectedLabels: false,
                 unselectedItemColor: Color.fromRGBO(195, 214, 220, 100.0),
                 selectedItemColor: Color.fromRGBO(30, 67, 255, 100.0),

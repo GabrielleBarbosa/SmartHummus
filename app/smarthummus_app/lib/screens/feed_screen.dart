@@ -49,11 +49,11 @@ class _FeedScreenState extends State<FeedScreen> {
         onTap: () => setState(() {
           _launched = _launchInBrowser(_newsArticles[index].url);
         }),
-        child: FeedCard(_newsArticles[index].title, _newsArticles[index].description, _newsArticles[index].urlToImage),
+        child: FeedCard(_newsArticles[index].title, _newsArticles[index].description, _newsArticles[index].urlToImage, _newsArticles[index].content.split('[')[0]),
       );
   }
 
-  void _decreasePage(){
+  /*void _decreasePage(){
     setState(() {
       _page--;
       _disabled = false;
@@ -80,7 +80,7 @@ class _FeedScreenState extends State<FeedScreen> {
       _disabled = true;
     }
   }
-
+*/
 
   Widget _cabecalho(){
     return Column(
@@ -134,7 +134,7 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
           ),
         ),
-        Row(
+        /*Row(
           children: [
             RaisedButton(
               child: Text("Anterior"),
@@ -145,7 +145,7 @@ class _FeedScreenState extends State<FeedScreen> {
               onPressed: _disabled?null:_increasePage,
             ),
           ],
-        ),
+        ),*/
 
         Padding(
             padding: EdgeInsets.only(top: 30.0, bottom: 30.0),
@@ -165,11 +165,11 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-            itemCount: 11,
+            itemCount: _newsArticles.length+1,
             itemBuilder: (context, index){
               if(index == 0)
                 return _cabecalho();
-              return _buildItemsForListView(context, _page*10 + index-1);
+              return _buildItemsForListView(context, index-1);
             },
     );
 

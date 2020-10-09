@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smarthummusapp/cards/chart_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
+import 'package:smarthummusapp/database/database.dart';
+import 'package:smarthummusapp/database/measures.dart';
 
 class HumidityScreen extends StatefulWidget {
   @override
@@ -34,7 +36,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: LinearPercentIndicator(
-                    width: 240.0,
+                    width: MediaQuery.of(context).size.width / 1.6,
                     lineHeight: 23.0,
                     percent: humidityValue,
                     backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
@@ -48,7 +50,16 @@ class _HumidityScreenState extends State<HumidityScreen> {
                     ),
                   ),
                 ),
-                ChartCard(values),
+                FutureBuilder<List<Measures>>(
+                  future: Database.getMeasures(),
+                  builder: (context, measures) {
+                    if (!measures.hasData)
+                      return Center(child: CircularProgressIndicator());
+                    else {
+                      return Column(children: [ChartCard(measures.data, "humA", Color(0xff12c2e9), Color(0xffc471ed)),ChartCard(measures.data, "humB", Color(0xff12c2e9), Color(0xffc471ed))],);
+                    }
+                  },
+                ),
                 WarningsCard()
               ],
             ),
