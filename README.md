@@ -1,2 +1,2 @@
 # SmartHummus
-Composteira doméstica automatizada integrada com aplicativo 
+Composteira doméstica automatizada integrada a aplicativo 
