@@ -26,26 +26,28 @@ int pinSensorNivel = 10;
 int valNivel = 0;
 
 //Umidade
-int pinSensorUmidA = A0;
-int valUmid = 0;
+#define pinSensorUmidA A0
+#define pinSensorUmidB A3
+int valUmidA = 0;
+int valUmidB= 0;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  setupMQ2();
+  //setupMQ2();
   setupMQ135();
-  setupNivel();
-  setupTemp();
-  setupUmid();
+  //setupNivel();
+  //setupTemp();
+  //setupUmid();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  loopMQ2();
+  //loopMQ2();
   loopMQ135();
-  loopNivel();
-  loopTemp();
-  loopUmid();
+  //loopNivel();
+  //loopTemp();
+  //loopUmid();
 }
 
 void setupMQ2(){
@@ -116,15 +118,30 @@ void loopTemp(){
 
 void setupUmid(){
   pinMode(pinSensorUmidA, INPUT); 
+  pinMode(pinSensorUmidB, INPUT); 
 }
 
 void loopUmid(){
    // Faz a leitura do sensor
-  valUmid = analogRead(pinSensorUmidA);
-
+  valUmidA = analogRead(pinSensorUmidA);
+  valUmidB = analogRead(pinSensorUmidB);
   // Exibe o valor lido no monitor serial
-  Serial.println(valUmid);
+ 
+   Serial.print("Umid1: ");
+  Serial.println(valUmidA);
+  Serial.print("Umid2: ");
+  Serial.println(valUmidB);
+  Serial.println();
+  
+  valUmidA = map(valUmidA, 690, 410, 0, 100);
+  valUmidB = map(valUmidB, 670, 390, 0, 100);
+  
+   Serial.print("Umid1: ");
+  Serial.println(valUmidA);
+  Serial.print("Umid2: ");
+  Serial.println(valUmidB);
+  Serial.println();
 
   //Cria um pequeno atraso entre cada medição
-  delay(1000);
+  delay(1400);
 }
