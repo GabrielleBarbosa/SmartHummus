@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/screens/feed_screen.dart';
+import 'package:smarthummusapp/screens/home_screen.dart';
 import 'package:smarthummusapp/screens/perfil_screen.dart';
+import 'package:smarthummusapp/screens/setting_screen.dart';
 import 'package:smarthummusapp/screens/setting_screen.dart';
 import 'package:smarthummusapp/screens/sign_in_screen.dart';
 import 'package:smarthummusapp/screens/sign_up_screen.dart';
@@ -26,7 +29,7 @@ class _ManagePerfilScreenState extends State<ManagePerfilScreen> {
               leading: Builder(
                 builder: (BuildContext context) {
                   return IconButton(
-                    icon: const Icon(Icons.short_text, color: Colors.white, size: 50.0,),
+                    icon: const Icon(Icons.short_text, color: Colors.white, size: 50.0),
                     onPressed: () {
                       Scaffold.of(context).openDrawer();
                     },
@@ -35,7 +38,7 @@ class _ManagePerfilScreenState extends State<ManagePerfilScreen> {
                 },
               ),
               elevation: 0,
-              backgroundColor: Color.fromRGBO(136, 240, 0, 1.0),
+              backgroundColor: Color.fromRGBO(121, 55, 180, 1.0),
             ),
             body: PerfilScreen(),
             drawer: CustomDrawer(_pageController),
@@ -47,12 +50,6 @@ class _ManagePerfilScreenState extends State<ManagePerfilScreen> {
               ),
               drawer: CustomDrawer(_pageController),
               body: SettingScreen()
-          ),
-          Container(
-            color: Colors.yellow,
-          ),
-          Container(
-            color: Colors.blue,
           ),
         ],
       );

@@ -12,15 +12,6 @@ class PerfilScreen extends StatefulWidget {
 }
 
 class _PerfilScreenState extends State<PerfilScreen> {
-
-  void _signOut() async{
-    bool logOut = await Database.signOut();
-    if(logOut){
-      Navigator.pop(context);
-      Navigator.push(context, MaterialPageRoute (builder: (context) => SignInScreen()));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -30,11 +21,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
           children: <Widget>[
             Container(
               color: Colors.transparent,
-              height: 170.0,
+              height: 130,
             ),
             Container(
-              color: Color.fromRGBO(136, 240, 0, 1.0),
-              height: 85.0,
+              color: Color.fromRGBO(121, 55, 180, 1.0),
+              height: 85,
             ),
             Positioned.fill(
                 child: Align(
@@ -111,8 +102,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           color: Color.fromRGBO(55, 55, 55, 0.65)),
                     ),
                   ),
-                  buildActivities(Icons.adb, "Maoe", Colors.lightGreen),
-                  buildActivities(SmartHummusIcons.pig, "PORCO", Colors.pinkAccent),
+                  buildActivities(SmartHummusIcons.bag, "TEXTO",
+                      Color.fromRGBO(107, 109, 255, 1.0)),
+                  buildActivities(SmartHummusIcons.starman, "TEXTO",
+                      Color.fromRGBO(107, 109, 255, 1.0)),
+                  buildActivities(SmartHummusIcons.medal, "TEXTO",
+                      Color.fromRGBO(107, 109, 255, 1.0)),
                   Padding(
                       padding: EdgeInsets.only(top: 30.0, left: 35.0),
                       child: Align(
@@ -125,10 +120,6 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               color: Color.fromRGBO(55, 55, 55, 0.65)),
                         ),
                       )),
-                  RaisedButton(
-                    child: Text("Sair"),
-                    onPressed: _signOut,
-                  )
                 ],
               ),
             ),

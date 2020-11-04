@@ -42,4 +42,7 @@ class SmartHummusIcons {
   static const IconData alert = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData alright = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData leaf = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData medal = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData starman = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bag = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

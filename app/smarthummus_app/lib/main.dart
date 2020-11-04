@@ -10,14 +10,12 @@ import 'package:smarthummusapp/widgets/custom_drawer.dart';
 import 'database/database.dart';
 
 class SmartHummusApp extends StatelessWidget {
-
   final String initialRoute;
 
   SmartHummusApp({this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,8 +31,7 @@ class SmartHummusApp extends StatelessWidget {
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
                   color: Color.fromRGBO(136, 240, 0, 1.0), width: 3.0),
-            )
-        ),
+            )),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: initialRoute,
@@ -46,12 +43,11 @@ class SmartHummusApp extends StatelessWidget {
   }
 }
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseUser user = await Database.getUser();
-  final bool isLogged = user!=null;
-  final SmartHummusApp myApp = SmartHummusApp(
-    initialRoute: isLogged ? '/home' : '/'
-  );
+  final bool isLogged = user != null;
+  final SmartHummusApp myApp =
+      SmartHummusApp(initialRoute: isLogged ? '/home' : '/');
   runApp(myApp);
 }

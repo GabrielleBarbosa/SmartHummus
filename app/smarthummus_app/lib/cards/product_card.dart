@@ -23,18 +23,18 @@ class _ProductCardState extends State<ProductCard> {
     return Container(
       height: 130,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
             BoxShadow(
-                color: Colors.black38, spreadRadius: 0, blurRadius: 8),
+                color: Colors.black38, spreadRadius: 0, blurRadius: 10),
           ],
         ),
         child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
           child: Container(
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
                   Image(
@@ -46,10 +46,10 @@ class _ProductCardState extends State<ProductCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Composteira SmartHummus"),
-                        Text("De VrRms", style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0))),
+                        Text("Composteira SmartHummus", style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
+                        Text("De VrRms", style: GoogleFonts.raleway(fontSize: 11, color: Color.fromRGBO(55, 55, 55, 1.0))),
                         Flexible(fit: FlexFit.tight, child: SizedBox()),
-                        Text("R\$420,00", style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(136, 240, 0, 1.0)))
+                        Text("R\$420,00", style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(180, 240, 0, 1.0), fontWeight: FontWeight.w700))
                       ],
                     ),
                   )

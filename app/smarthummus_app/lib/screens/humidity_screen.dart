@@ -36,16 +36,16 @@ class _HumidityScreenState extends State<HumidityScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: LinearPercentIndicator(
-                    width: MediaQuery.of(context).size.width / 1.6,
+                    width: MediaQuery.of(context).size.width / 1.8,
                     lineHeight: 23.0,
                     percent: humidityValue,
                     backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
                     progressColor: Color.fromRGBO(0, 179, 224, 100.0),
                     leading: Padding(
-                      padding: EdgeInsets.only(right: 10.0),
+                      padding: EdgeInsets.only(right: 20.0),
                       child: Text((humidityValue*100).toString() + "%",
                         style: GoogleFonts.raleway(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),),
                     ),
                   ),

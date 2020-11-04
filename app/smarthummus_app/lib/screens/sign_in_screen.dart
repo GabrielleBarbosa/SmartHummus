@@ -36,7 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
     debugPrint((user==null).toString());
     if(email!= "" ){
         if(email.contains("@")) {
-          FirebaseUser user = await Database.signInEmailPass(email, pass);
+          FirebaseUser user = await Database.signInEmailPass(email.trim(), pass);
           if(user != null) {
             Navigator.pop(context);
             Navigator.push(context,

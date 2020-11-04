@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
-
+import 'package:smarthummusapp/screens/sign_in_screen.dart';
 import 'drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -39,7 +40,9 @@ class CustomDrawer extends StatelessWidget {
                       child: Text(
                         "Meu perfil",
                         style: GoogleFonts.raleway(
-                            fontSize: 34.0, fontWeight: FontWeight.bold, color: Color.fromRGBO(55, 55, 55, 0.7)),
+                            fontSize: 34.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(55, 55, 55, 0.7)),
                       ),
                     ),
                   ],
@@ -48,7 +51,35 @@ class CustomDrawer extends StatelessWidget {
               Divider(color: Color.fromRGBO(136, 240, 0, 1.0), thickness: 1),
               DrawerTile(SmartHummusIcons.name, "Perfil", _pageController, 0),
               DrawerTile(Icons.settings, "Alterar dados", _pageController, 1),
-              DrawerTile(Icons.arrow_back, "Sair", _pageController, 2),
+              ListTile(
+                contentPadding: EdgeInsets.all(0),
+                title: Container(
+                  height: 50.0,
+                  child: Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.arrow_back,
+                        size: 32.0,
+                      ),
+                      SizedBox(width: 32.0),
+                      Text(
+                        "Sair",
+                        style: TextStyle(fontSize: 16.6, color: Colors.black),
+                      )
+                    ],
+                  ),
+                ),
+                onTap: () async {
+                  bool logOut = await Database.signOut();
+                  if (logOut) {
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignInScreen()));
+                  }
+                },
+              ),
             ],
           )
         ],

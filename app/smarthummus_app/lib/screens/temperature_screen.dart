@@ -84,17 +84,17 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
           Padding(
             padding: EdgeInsets.only(left: 20.0, top: 20.0),
             child: LinearPercentIndicator(
-              width: MediaQuery.of(context).size.width / 1.6,
+              width: MediaQuery.of(context).size.width / 1.8,
               lineHeight: 23.0,
               percent: 0.3,
               backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
               progressColor: Colors.orangeAccent,
               leading: Padding(
-                padding: EdgeInsets.only(right: 10.0),
+                padding: EdgeInsets.only(right: 20.0),
                 child: new Text(
                   temperatureText,
                   style: GoogleFonts.raleway(
-                    fontSize: 20,
+                    fontSize: 18,
                   ),
                 ),
               ),
