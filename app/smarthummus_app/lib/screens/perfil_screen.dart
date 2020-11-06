@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/cards/comment_card.dart';
 import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/sign_in_screen.dart';
@@ -109,6 +110,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
                   buildActivities(SmartHummusIcons.medal, "TEXTO",
                       Color.fromRGBO(107, 109, 255, 1.0)),
                   Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Divider(color: Color.fromRGBO(195, 214, 220, 100.0), thickness: 2),
+                  ),
+
+                  Padding(
                       padding: EdgeInsets.only(top: 30.0, left: 35.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
@@ -120,6 +126,12 @@ class _PerfilScreenState extends State<PerfilScreen> {
                               color: Color.fromRGBO(55, 55, 55, 0.65)),
                         ),
                       )),
+                  CommentCard("Gabrielle da Silva Barbosa".split(" ")[0], "De galho em galho, o macaco enche o papo De galho em galho, o macaco enche o papo De galho em galho, o macaco enche o papo De galho em galho, o macaco enche o papo","", 3),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Divider(color: Color.fromRGBO(195, 214, 220, 100.0), thickness: 2),
+                  ),
+                  CommentCard("Gabrielle da Silva Barbosa".split(" ")[0], "De galho em galho, o macaco enche o papo De galho em galho, o macaco enche o papo De galho em galho, o macaco enche o papo De galho em galho, o macaco enche o papo","", 1),
                 ],
               ),
             ),

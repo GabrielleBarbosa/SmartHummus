@@ -84,7 +84,10 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                     )
                   ]),
                 ),
-                ProductCard(Product("", "", "", "", "", "", "")),
+                GestureDetector(
+                  child: ProductCard(Product("", "", "", "", "", "", "")),
+                ),
+
 
                 Padding(
                   padding: EdgeInsets.only(top: 30, bottom: 20),
