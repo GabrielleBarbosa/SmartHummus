@@ -1,0 +1,46 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smarthummusapp/database/database.dart';
+import 'package:smarthummusapp/news/web_service.dart';
+
+class Measures {
+
+  num tempA, tempB;
+  num humA, humB;
+  num gasMQ2, gasMQ135;
+  bool isFull;
+  String date;
+
+  Measures({this.tempA, this.tempB, this.humA, this.humB, this.gasMQ2, this.gasMQ135, this.isFull, this.date});
+
+  factory Measures.fromJson(Map<String,dynamic> json) {
+    return Measures(
+        tempA: json['temperatura1']+0.0,
+        tempB: json['temperatura2']+0.0,
+        humB: json['umidade1']+0.0,
+        humA: json['umidade2']+0.0,
+        gasMQ2: json['gasMQ2']+0.0,
+        isFull: json['cheio'] == 0 ? false : true,
+        gasMQ135: json['gasMQ135']+0.0,
+        date: json['horario']
+    );
+  }
+
+  static Future<Resource<List<Measures>>> get allLastDay async {
+
+    String uid = await Database.getUserUid();
+
+    String url = "https://smarthummus.herokuapp.com/medidas/dia?uid="+uid;
+    return Resource(
+        url: url,
+        parse: (response) {
+          final result = json.decode(response.body);
+          Iterable list = result;
+          return list.map((model) => Measures.fromJson(model)).toList();
+        }
+    );
+
+  }
+
+}

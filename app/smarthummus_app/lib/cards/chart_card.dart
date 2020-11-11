@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/database/measures.dart';
+import 'package:smarthummusapp/news/measures.dart';
 
 
 class ChartCard extends StatefulWidget {
@@ -33,29 +33,30 @@ class _ChartCardState extends State<ChartCard> {
     // TODO: implement initState
     super.initState();
     num i = 1.0;
-    for(Measures mer in valores){
+    for(Measures m in valores){
       switch(tipo){
         case "tempA":
-          allSpots.add(FlSpot(i, mer.tempA));
+          allSpots.add(FlSpot(i, m.tempA));
           break;
         case "tempB":
-          allSpots.add(FlSpot(i, mer.tempB));
+          allSpots.add(FlSpot(i, m.tempB));
           break;
         case "humA":
-          allSpots.add(FlSpot(i, mer.humA));
+          allSpots.add(FlSpot(i, m.humA));
           break;
         case "humB":
-          allSpots.add(FlSpot(i, mer.humB));
+          allSpots.add(FlSpot(i, m.humB));
           break;
         case "gasMQ2":
-          allSpots.add(FlSpot(i, mer.gasMQ2));
+          allSpots.add(FlSpot(i, m.gasMQ2));
           break;
         case "gasMQ135":
-          allSpots.add(FlSpot(i, mer.gasMQ135));
+          allSpots.add(FlSpot(i, m.gasMQ135));
           break;
       }
 
       i++;
+
     }
 
     lineBarsData = [
@@ -144,8 +145,8 @@ class _ChartCardState extends State<ChartCard> {
                           // read about it in the below section
                             lineBarsData: lineBarsData,
                             titlesData: FlTitlesData(leftTitles: SideTitles(
-                                interval: 5,
-                                showTitles: true))
+                                interval: 2,
+                                showTitles: true)),
 
                         ),
                       ),

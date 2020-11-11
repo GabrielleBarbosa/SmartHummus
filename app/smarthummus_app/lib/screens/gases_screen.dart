@@ -4,14 +4,24 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smarthummusapp/cards/chart_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
 import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/database/measures.dart';
+import 'package:smarthummusapp/news/measures.dart';
 
 class GasesScreen extends StatefulWidget {
+
+  List<Measures> _measuresLastDay;
+
+  GasesScreen(this._measuresLastDay);
+
   @override
-  _GasesScreenState createState() => _GasesScreenState();
+  _GasesScreenState createState() => _GasesScreenState(_measuresLastDay);
 }
 
 class _GasesScreenState extends State<GasesScreen> {
+
+  List<Measures> _measuresLastDay;
+
+  _GasesScreenState(this._measuresLastDay);
+
   double flammableValue = 0.4;
   List<double> values = [40, 50, 30, 40, 45, 55];
 
@@ -51,22 +61,13 @@ class _GasesScreenState extends State<GasesScreen> {
                 ),
               ),
             ),
-            FutureBuilder<List<Measures>>(
-              future: Database.getMeasures(),
-              builder: (context, measures) {
-                if (!measures.hasData)
-                  return Center(child: CircularProgressIndicator());
-                else {
-                  return Column(
-                    children: [
-                      ChartCard(measures.data, "gasMQ2", Color(0xff12c2e9),
-                          Color(0xffc471ed)),
-                      ChartCard(measures.data, "gasMQ135", Color(0xff12c2e9),
-                          Color(0xffc471ed))
-                    ],
-                  );
-                }
-              },
+            Column(
+                children: [
+                  ChartCard(_measuresLastDay, "gasMQ2", Color(0xff12c2e9),
+                      Color(0xffc471ed)),
+                  ChartCard(_measuresLastDay, "gasMQ135", Color(0xff12c2e9),
+                      Color(0xffc471ed))
+                ],
             ),
             WarningsCard()
           ],

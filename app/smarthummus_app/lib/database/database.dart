@@ -12,6 +12,11 @@ class Database {
     return await FirebaseAuth.instance.currentUser();
   }
 
+  static Future<String> getUserUid() async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    return user.uid;
+  }
+
   static Future<FirebaseUser> signInGoogle() async{
     try{
       final GoogleSignInAccount googleSignInAccount =

@@ -1,20 +1,39 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smarthummusapp/cards/chart_card.dart';
+import 'package:smarthummusapp/cards/charts_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
 import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/database/measures.dart';
+import 'package:smarthummusapp/news/measures.dart';
 
 class HumidityScreen extends StatefulWidget {
+
+  List<Measures> _measuresLastDay;
+
+  HumidityScreen(this._measuresLastDay);
+
   @override
-  _HumidityScreenState createState() => _HumidityScreenState();
+  _HumidityScreenState createState() => _HumidityScreenState(_measuresLastDay);
 }
 
 class _HumidityScreenState extends State<HumidityScreen> {
 
+  List<Measures> _measuresLastDay;
+
+  _HumidityScreenState(this._measuresLastDay);
+
   double humidityValue = 0.4;
   List<double> values = [50,50,56,70,69,30,35];
+
+  String uid = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +52,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
                     color: Color.fromRGBO(10, 10, 10, 100.0),
                   ),
                 ),
+                Text(uid),
                 Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: LinearPercentIndicator(
@@ -50,16 +70,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
                     ),
                   ),
                 ),
-                FutureBuilder<List<Measures>>(
-                  future: Database.getMeasures(),
-                  builder: (context, measures) {
-                    if (!measures.hasData)
-                      return Center(child: CircularProgressIndicator());
-                    else {
-                      return Column(children: [ChartCard(measures.data, "humA", Color(0xff12c2e9), Color(0xffc471ed)),ChartCard(measures.data, "humB", Color(0xff12c2e9), Color(0xffc471ed))],);
-                    }
-                  },
-                ),
+              Column(children: [ChartsCard(_measuresLastDay, "humA", Color(0xff12c2e9), Color(0xffc471ed)),ChartsCard(_measuresLastDay, "humB", Color(0xff12c2e9), Color(0xffc471ed))],),
                 WarningsCard()
               ],
             ),

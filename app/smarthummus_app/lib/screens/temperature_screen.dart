@@ -4,14 +4,24 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:smarthummusapp/cards/chart_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
 import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/database/measures.dart';
+import 'package:smarthummusapp/news/measures.dart';
 
 class TemperatureScreen extends StatefulWidget {
+
+  List<Measures> _measuresLastDay;
+
+  TemperatureScreen(this._measuresLastDay);
+
   @override
-  _TemperatureScreenState createState() => _TemperatureScreenState();
+  _TemperatureScreenState createState() => _TemperatureScreenState(_measuresLastDay);
 }
 
 class _TemperatureScreenState extends State<TemperatureScreen> {
+
+  List<Measures> _measuresLastDay;
+
+  _TemperatureScreenState(this._measuresLastDay);
+
   String dropdownValue = "Celsius";
   double temperatureValue = 35;
   String temperatureText = "35°C";
@@ -100,16 +110,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
               ),
             ),
           ),
-          FutureBuilder<List<Measures>>(
-            future: Database.getMeasures(),
-            builder: (context, measures) {
-              if (!measures.hasData)
-                return Center(child: CircularProgressIndicator());
-              else {
-                return Column(children: [ChartCard(measures.data, "tempA", Colors.orangeAccent, Colors.red),ChartCard(measures.data, "tempB", Colors.orangeAccent, Colors.red)],);
-              }
-            },
-          ),
+          Column(children: [ChartCard(_measuresLastDay, "tempA", Colors.orangeAccent, Colors.red),ChartCard(_measuresLastDay, "tempB", Colors.orangeAccent, Colors.red)],),
           WarningsCard()
       ],
     ),)
