@@ -59,14 +59,32 @@ class _HumidityScreenState extends State<HumidityScreen> {
                     progressColor: Color.fromRGBO(0, 179, 224, 100.0),
                     leading: Padding(
                       padding: EdgeInsets.only(right: 20.0),
-                      child: Text((_atual.humA).toString() + "%",
+                      child: Text((_atual.humA.toInt()).toString() + "%",
                         style: GoogleFonts.raleway(
                           fontSize: 18,
                         ),),
                     ),
                   ),
                 ),
-              Column(children: [ChartsCard(_measuresLastDay, "humA", Color(0xff12c2e9), Color(0xffc471ed)),ChartsCard(_measuresLastDay, "humB", Color(0xff12c2e9), Color(0xffc471ed))],),
+                ChartsCard(_measuresLastDay, "humA", Color(0xff12c2e9), Color(0xffc471ed)),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                  child: LinearPercentIndicator(
+                    width: MediaQuery.of(context).size.width / 1.8,
+                    lineHeight: 23.0,
+                    percent: _atual.humA/100,
+                    backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
+                    progressColor: Color.fromRGBO(0, 179, 224, 100.0),
+                    leading: Padding(
+                      padding: EdgeInsets.only(right: 20.0),
+                      child: Text((_atual.humB.toInt()).toString() + "%",
+                        style: GoogleFonts.raleway(
+                          fontSize: 18,
+                        ),),
+                    ),
+                  ),
+                ),
+                ChartsCard(_measuresLastDay, "humB", Color(0xff12c2e9), Color(0xffc471ed)),
                 WarningsCard()
               ],
             ),

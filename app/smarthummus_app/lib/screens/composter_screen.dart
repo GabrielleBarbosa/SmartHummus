@@ -117,7 +117,7 @@ class _ComposterScreenState extends State<ComposterScreen> {
                       children: [
                         ProgressScreen(),
                         HumidityScreen(snapshot.data, snapshot2.data),
-                        TemperatureScreen(snapshot.data),
+                        TemperatureScreen(snapshot.data, snapshot2.data),
                         GasesScreen(snapshot.data),
                       ],
                     );
@@ -129,7 +129,7 @@ class _ComposterScreenState extends State<ComposterScreen> {
               );
             }
             else if(snapshot.hasError){
-              return Text("Ocorreu um erro ao carregar dados");
+              return Text(snapshot.error.toString());
             }
             return CircularProgressIndicator();
           },
