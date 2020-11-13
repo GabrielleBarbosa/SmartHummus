@@ -11,23 +11,20 @@ import 'package:smarthummusapp/news/measures.dart';
 class HumidityScreen extends StatefulWidget {
 
   List<Measures> _measuresLastDay;
+  Measures _atual;
 
-  HumidityScreen(this._measuresLastDay);
+  HumidityScreen(this._measuresLastDay, this._atual);
 
   @override
-  _HumidityScreenState createState() => _HumidityScreenState(_measuresLastDay);
+  _HumidityScreenState createState() => _HumidityScreenState(_measuresLastDay, this._atual);
 }
 
 class _HumidityScreenState extends State<HumidityScreen> {
 
+  Measures _atual;
   List<Measures> _measuresLastDay;
 
-  _HumidityScreenState(this._measuresLastDay);
-
-  double humidityValue = 0.4;
-  List<double> values = [50,50,56,70,69,30,35];
-
-  String uid = "";
+  _HumidityScreenState(this._measuresLastDay, this._atual);
 
   @override
   void initState() {
@@ -52,18 +49,17 @@ class _HumidityScreenState extends State<HumidityScreen> {
                     color: Color.fromRGBO(10, 10, 10, 100.0),
                   ),
                 ),
-                Text(uid),
                 Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
                   child: LinearPercentIndicator(
                     width: MediaQuery.of(context).size.width / 1.8,
                     lineHeight: 23.0,
-                    percent: humidityValue,
+                    percent: _atual.humA/100,
                     backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
                     progressColor: Color.fromRGBO(0, 179, 224, 100.0),
                     leading: Padding(
                       padding: EdgeInsets.only(right: 20.0),
-                      child: Text((humidityValue*100).toString() + "%",
+                      child: Text((_atual.humA).toString() + "%",
                         style: GoogleFonts.raleway(
                           fontSize: 18,
                         ),),

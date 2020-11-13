@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smarthummusapp/news/measures.dart';
 
-import 'measures.dart';
+import 'instruction.dart';
 
 class Database {
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -78,5 +80,34 @@ class Database {
          measures.add(Measures.fromDocument(element));
     });
     return measures;
+  }
+
+  static Future<List<Instruction>> getInstructions() async{
+    try{
+      QuerySnapshot data = await Firestore.instance.collection("instrucoes").orderBy('number').getDocuments();
+      List<Instruction> instructions = List<Instruction>();
+      int i =0;
+      data.documents.forEach((element) {
+        instructions.add(Instruction.fromDocument(element));
+        i++;
+      });
+      if(instructions.length == 0)
+        return null;
+      return instructions;
+    }catch(e){
+      return null;
+    }
+  }
+
+  static Future<Measures> getMeasureNow() async {
+    try{
+      String uid = await getUserUid();
+      var data = await Firestore.instance.collection('medidaAtual').document('0').get();
+
+      Measures m = Measures.fromDocument(data);
+      return m;
+    }catch(e){
+      throw Exception(e.toString());
+    }
   }
 }

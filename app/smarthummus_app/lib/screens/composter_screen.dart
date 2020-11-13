@@ -32,11 +32,13 @@ class _ComposterScreenState extends State<ComposterScreen> {
   int _selectedItem = 0;
 
   Future<List<Measures>> _measuresLastDay;
+  Future<Measures> _atual;
 
   @override
   void initState() {
     super.initState();
     _measuresLastDay = fetchMeasures();
+    _atual = Database.getMeasureNow();
   }
 
   Future<List<Measures>> fetchMeasures() async {
@@ -107,17 +109,27 @@ class _ComposterScreenState extends State<ComposterScreen> {
           builder: (context, snapshot){
 
             if(snapshot.hasData){
-              return TabBarView(
-                children: [
-                  ProgressScreen(),
-                  HumidityScreen(snapshot.data),
-                  TemperatureScreen(snapshot.data),
-                  GasesScreen(snapshot.data),
-                ],
+              return FutureBuilder<Measures>(
+                future: _atual,
+                builder: (context, snapshot2){
+                  if(snapshot2.hasData)
+                    return TabBarView(
+                      children: [
+                        ProgressScreen(),
+                        HumidityScreen(snapshot.data, snapshot2.data),
+                        TemperatureScreen(snapshot.data),
+                        GasesScreen(snapshot.data),
+                      ],
+                    );
+                  else if(snapshot2.hasError){
+                    return Text(snapshot2.error.toString());
+                  }
+                  return CircularProgressIndicator();
+                },
               );
             }
             else if(snapshot.hasError){
-              Text("Ocorreu um erro ao carregar dados");
+              return Text("Ocorreu um erro ao carregar dados");
             }
             return CircularProgressIndicator();
           },
