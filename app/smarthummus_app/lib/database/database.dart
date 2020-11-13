@@ -102,9 +102,11 @@ class Database {
   static Future<Measures> getMeasureNow() async {
     try{
       String uid = await getUserUid();
-      var data = await Firestore.instance.collection('medidaAtual').document('0').get();
+      var data = await Firestore.instance.collection('medidaAtual').document(uid).get();
 
       Measures m = Measures.fromDocument(data);
+      if(m == null)
+        return Measures() ;
       return m;
     }catch(e){
       throw Exception(e.toString());
