@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/cards/product_card.dart';
-import 'package:smarthummusapp/database/product.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 
 class ProductScreen extends StatefulWidget {

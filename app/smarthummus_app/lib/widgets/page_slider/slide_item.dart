@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/page_slider/slide.dart';
+import 'package:smarthummusapp/widgets/page_slider/slide.dart';
 
 class SlideItem extends StatelessWidget {
   final int index;

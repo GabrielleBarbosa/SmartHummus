@@ -1,13 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/screens/feed_screen.dart';
-import 'package:smarthummusapp/screens/home_screen.dart';
 import 'package:smarthummusapp/screens/perfil_screen.dart';
 import 'package:smarthummusapp/screens/setting_screen.dart';
-import 'package:smarthummusapp/screens/setting_screen.dart';
-import 'package:smarthummusapp/screens/sign_in_screen.dart';
-import 'package:smarthummusapp/screens/sign_up_screen.dart';
 import 'package:smarthummusapp/widgets/custom_drawer.dart';
 
 class ManagePerfilScreen extends StatefulWidget {

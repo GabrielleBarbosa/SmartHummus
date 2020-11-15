@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/cards/comment_card.dart';
-import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
-import 'package:smarthummusapp/screens/sign_in_screen.dart';
 
 class PerfilScreen extends StatefulWidget {
   @override

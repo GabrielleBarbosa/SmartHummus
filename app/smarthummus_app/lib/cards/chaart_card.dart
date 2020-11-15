@@ -3,23 +3,24 @@ import 'package:fl_animated_linechart/chart/area_line_chart.dart';
 import 'package:fl_animated_linechart/common/pair.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/database/chart_content.dart';
 import 'package:smarthummusapp/database/measures.dart';
 
-class ChartsCard extends StatefulWidget {
-  List<Measures> lastDayValues;
+class ChaartsCard extends StatefulWidget {
+  List<List<ChartContent>> values;
   String tipo;
   Color cor1, cor2;
 
-  ChartsCard(this.lastDayValues, this.tipo, this.cor1, this.cor2);
+  ChaartsCard(this.values, this.tipo, this.cor1, this.cor2);
 
   @override
-  _ChartsCardState createState() =>
-      _ChartsCardState(this.lastDayValues, this.tipo, this.cor1, this.cor2);
+  _ChaartsCardState createState() =>
+      _ChaartsCardState(this.values, this.tipo, this.cor1, this.cor2);
 }
 
-class _ChartsCardState extends State<ChartsCard> {
+class _ChaartsCardState extends State<ChaartsCard> {
   String dropdownValue = "ÚLTIMAS 24 HORAS";
-  List<Measures> lastDayValues;
+  List<List<ChartContent>> values;
   String tipo;
   Color cor1, cor2;
 
@@ -28,7 +29,7 @@ class _ChartsCardState extends State<ChartsCard> {
   Map<DateTime, double> line3;
   AreaLineChart chart;
 
-  _ChartsCardState(this.lastDayValues, this.tipo, this.cor1, this.cor2);
+  _ChaartsCardState(this.values, this.tipo, this.cor1, this.cor2);
 
   @override
   void initState() {
@@ -39,9 +40,19 @@ class _ChartsCardState extends State<ChartsCard> {
 
   void initLines() {
     line1 = Map();
-    for (int i = 0; i < lastDayValues.length; i++) {
+    for (int i = 0; i < values[0].length; i++) {
       line1[DateTime.now().subtract(Duration(minutes: 60 * i))] =
-          lastDayValues[i].humA;
+          (values[0])[i].y;
+    }
+    line2 = Map();
+    for (int i = 0; i < values[1].length; i++) {
+      line1[DateTime.now().subtract(Duration(minutes: 60 * i))] =
+          (values[1])[i].y;
+    }
+    line3 = Map();
+    for (int i = 0; i < values[2].length; i++) {
+      line1[DateTime.now().subtract(Duration(minutes: 60 * i))] =
+          (values[2])[i].y;
     }
   }
 
@@ -62,7 +73,7 @@ class _ChartsCardState extends State<ChartsCard> {
 
         case 'ÚLTIMO MÊS':
           chart = AreaLineChart.fromDateTimeMaps(
-              [line1], [cor1], ['%'],
+              [line3], [cor1], ['%'],
               gradients: [Pair(cor1.withOpacity(0.5), cor2.withOpacity(0.5))]);
           break;
       }

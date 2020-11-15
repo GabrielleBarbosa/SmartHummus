@@ -1,29 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:smarthummusapp/cards/chaart_card.dart';
 import 'package:smarthummusapp/cards/chart_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
-import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/news/measures.dart';
+import 'package:smarthummusapp/database/chart_content.dart';
+import 'package:smarthummusapp/database/measures.dart';
 
 class GasesScreen extends StatefulWidget {
+  List<List<Measures>> _measures;
 
-  List<Measures> _measuresLastDay;
-
-  GasesScreen(this._measuresLastDay);
+  GasesScreen(this._measures);
 
   @override
-  _GasesScreenState createState() => _GasesScreenState(_measuresLastDay);
+  _GasesScreenState createState() => _GasesScreenState(_measures);
 }
 
 class _GasesScreenState extends State<GasesScreen> {
+  List<List<Measures>> _measures;
 
-  List<Measures> _measuresLastDay;
-
-  _GasesScreenState(this._measuresLastDay);
+  _GasesScreenState(this._measures);
 
   double flammableValue = 0.4;
-  List<double> values = [40, 50, 30, 40, 45, 55];
+
+  List<List<ChartContent>> gasMQ135;
+  List<List<ChartContent>> gasMQ2;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _makeChartArrays();
+  }
+
+  void _makeChartArrays() {
+    gasMQ2 = List<List<ChartContent>>();
+    gasMQ135 = List<List<ChartContent>>();
+    var aux1 = List();
+    var aux2 = List();
+
+    for (var m in _measures[0]) {
+      aux1.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.gasMQ2));
+      aux2.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.gasMQ135));
+    }
+    gasMQ2.add(aux1);
+    gasMQ135.add(aux2);
+    aux1 = List();
+    aux2 = List();
+
+    for (var m in _measures[1]) {
+      aux1.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.gasMQ2));
+      aux2.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.gasMQ135));
+    }
+    gasMQ2.add(aux1);
+    gasMQ135.add(aux2);
+    aux1 = List();
+    aux2 = List();
+
+    for (var m in _measures[2]) {
+      aux1.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.gasMQ2));
+      aux2.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.gasMQ135));
+    }
+    gasMQ2.add(aux1);
+    gasMQ135.add(aux2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,14 +107,8 @@ class _GasesScreenState extends State<GasesScreen> {
                 ),
               ),
             ),
-            Column(
-                children: [
-                  ChartCard(_measuresLastDay, "gasMQ2", Color(0xff12c2e9),
-                      Color(0xffc471ed)),
-                  ChartCard(_measuresLastDay, "gasMQ135", Color(0xff12c2e9),
-                      Color(0xffc471ed))
-                ],
-            ),
+            ChaartsCard(gasMQ2, "", Color(0xff12c2e9), Color(0xffc471ed)),
+            ChaartsCard(gasMQ135, "", Color(0xff12c2e9), Color(0xffc471ed)),
             WarningsCard()
           ],
         ),

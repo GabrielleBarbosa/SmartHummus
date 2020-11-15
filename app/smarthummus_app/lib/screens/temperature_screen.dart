@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:smarthummusapp/cards/chart_card.dart';
+import 'package:smarthummusapp/cards/chaart_card.dart';
 import 'package:smarthummusapp/cards/warnings_card.dart';
-import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/news/measures.dart';
+import 'package:smarthummusapp/database/chart_content.dart';
+import 'package:smarthummusapp/database/measures.dart';
 
 class TemperatureScreen extends StatefulWidget {
-  List<Measures> _measuresLastDay;
+  List<List<Measures>> _measures;
   Measures _now;
 
-  TemperatureScreen(this._measuresLastDay, this._now);
+  TemperatureScreen(this._measures, this._now);
 
   @override
   _TemperatureScreenState createState() =>
-      _TemperatureScreenState(_measuresLastDay, _now);
+      _TemperatureScreenState(_measures, _now);
 }
 
 class _TemperatureScreenState extends State<TemperatureScreen> {
-  List<Measures> _measuresLastDay;
+  List<List<Measures>> _measures;
   Measures _now;
 
-  _TemperatureScreenState(this._measuresLastDay, this._now);
+  _TemperatureScreenState(this._measures, this._now);
 
   String dropdownValue = "Celsius";
   String t1 = "",  t2 = "";
 
-  List<double> values = [26.0, 27.0, 30.0, 32.0, 30.0, 28.0, 29.0];
+  List<List<ChartContent>> tempA, tempB;
 
   @override
   void initState() {
@@ -34,7 +34,47 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     super.initState();
     t1 = _now.tempA.toInt().toString() + "°C";
     t2 = _now.tempB.toInt().toString() + "°C";
+
+    _makeChartArrays();
   }
+
+  void _makeChartArrays() {
+    tempA = List<List<ChartContent>>();
+    tempB = List<List<ChartContent>>();
+    var aux1 = List<ChartContent>();
+    var aux2 = List<ChartContent>();
+    for (var m in _measures[0]) {
+      aux1.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humA));
+      aux2.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humB));
+    }
+    tempA.add(aux1);
+    tempB.add(aux2);
+    aux1 = List();
+    aux2 = List();
+
+    for (var m in _measures[1]) {
+      aux1.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humA));
+      aux2.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humB));
+    }
+    tempA.add(aux1);
+    tempB.add(aux2);
+    aux1 = List();
+    aux2 = List();
+
+    for (var m in _measures[2]) {
+      aux1.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humA));
+      aux2.add(ChartContent(
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humB));
+    }
+    tempA.add(aux1);
+    tempB.add(aux2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -123,7 +163,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
               ),
             ),
           ),
-          ChartCard(_measuresLastDay, "tempA", Colors.orangeAccent, Colors.red),
+          ChaartsCard(tempA, "°C", Colors.orangeAccent, Colors.red),
           Padding(
             padding: EdgeInsets.only(left: 20.0, top: 20.0),
             child: LinearPercentIndicator(
@@ -143,7 +183,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
               ),
             ),
           ),
-          ChartCard(_measuresLastDay, "tempB", Colors.orangeAccent, Colors.red),
+          ChaartsCard(tempB, "°C", Colors.orangeAccent, Colors.red),
           WarningsCard()
         ],
       ),

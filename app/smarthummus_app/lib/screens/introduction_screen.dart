@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/page_slider/slide.dart';
-import 'package:smarthummusapp/page_slider/slide_dots.dart';
-import 'package:smarthummusapp/page_slider/slide_item.dart';
+import 'package:smarthummusapp/widgets/page_slider/slide.dart';
+import 'package:smarthummusapp/widgets/page_slider/slide_dots.dart';
+import 'package:smarthummusapp/widgets/page_slider/slide_item.dart';
 import 'package:smarthummusapp/screens/sign_in_screen.dart';
 
 class IntroductionScreen extends StatefulWidget {

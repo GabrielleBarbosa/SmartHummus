@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smarthummusapp/news/measures.dart';
 
 import 'instruction.dart';
+import 'measures.dart';
 
 class Database {
   static final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -17,6 +16,15 @@ class Database {
   static Future<String> getUserUid() async{
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     return user.uid;
+  }
+
+  static Future<String> getUsername() async{
+    try{
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      return user.displayName;
+    }catch(e){
+      throw Exception(e.toString());
+    }
   }
 
   static Future<FirebaseUser> signInGoogle() async{
@@ -34,6 +42,12 @@ class Database {
       final AuthResult authResult =
       await FirebaseAuth.instance.signInWithCredential(credential);
 
+      try{
+        await hasComposter();
+      }catch(e){
+        setHasComposter(authResult.user.uid, false);
+      }
+
       return authResult.user;
     }catch(e){
       return null;
@@ -43,6 +57,7 @@ class Database {
   static Future<FirebaseUser> signUp(String email, String password) async{
       try{
         final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+        await setHasComposter(authResult.user.uid, false);
         return authResult.user;
       }catch(e){
         debugPrint(e.toString());
@@ -71,7 +86,14 @@ class Database {
     }
   }
 
-  static Future<List<Measures>> getMeasures() async{
+  static Future<void> setHasComposter(uid, newValue) async{
+    try{
+      await Firestore.instance.collection('users').document(uid).setData({'temComposteira': newValue});
+    }catch(e){
+      throw Exception (e.toString());
+    }
+  }
+  /*static Future<List<Measures>> getMeasures() async{
     String uid = await getUser().then((value) => value.uid);
     QuerySnapshot allData = await Firestore.instance.collection("medidas").getDocuments();
     List<Measures> measures = List<Measures>();
@@ -80,16 +102,26 @@ class Database {
          measures.add(Measures.fromDocument(element));
     });
     return measures;
+  }*/
+
+  static Future<bool> hasComposter() async{
+    try {
+      String uid = await getUserUid();
+      DocumentSnapshot data = await Firestore.instance.collection('users').document(uid).get();
+
+      return data.data['temComposteira'];
+
+    }catch(e){
+      throw Exception(e.toString());
+    }
   }
 
   static Future<List<Instruction>> getInstructions() async{
     try{
       QuerySnapshot data = await Firestore.instance.collection("instrucoes").orderBy('number').getDocuments();
       List<Instruction> instructions = List<Instruction>();
-      int i =0;
       data.documents.forEach((element) {
         instructions.add(Instruction.fromDocument(element));
-        i++;
       });
       if(instructions.length == 0)
         return null;

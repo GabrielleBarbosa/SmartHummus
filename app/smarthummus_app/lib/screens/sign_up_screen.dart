@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
-import 'package:smarthummusapp/screens/feed_screen.dart';
 
 import 'home_screen.dart';
 

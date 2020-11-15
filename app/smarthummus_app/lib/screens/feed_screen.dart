@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:smarthummusapp/cards/feed_card.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/news/news_article.dart';
-import 'package:smarthummusapp/news/web_service.dart';
+import 'package:smarthummusapp/database/database.dart';
+import 'file:///C:/Users/DELL/Documents/GitHub/SmartHummus/app/smarthummus_app/lib/database/news_article.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:http/http.dart' as http;
 
 class FeedScreen extends StatefulWidget {
   @override
@@ -15,24 +18,38 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
 
-  List<NewsArticle> _newsArticles = List<NewsArticle>();
+  Future<List<NewsArticle>> _newsArticles;
   int _page = 0;
   bool _disabled = false;
   Future<void> _launched;
+  Future<String> _username;
 
   @override
   void initState() {
     super.initState();
-    _populateNewsArticles();
+    _username = Database.getUsername();
+    _newsArticles = fetchNewsArticle();
   }
 
-  void _populateNewsArticles() {
+  Future<List<NewsArticle>> fetchNewsArticle() async {
 
-    Webservice().load(NewsArticle.all).then((newsArticles) => {
-      setState(() => {
-        _newsArticles = newsArticles
-      })
-    });
+    final response = await http.get('https://newsapi.org/v2/everything?q=sustentabilidade&apiKey=e6914ff243274c6a8b3a8362395a3ab6&language=pt&domains=globo.com,uol.com.br&sortBy=publishedAt');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      List<NewsArticle> list = List();
+      var decoded = jsonDecode(response.body)['articles'];
+
+      for(var a in decoded){
+        list.add(NewsArticle.fromJson(a));
+      }
+      return list;
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load measures');
+    }
   }
 
   Future<void> _launchInBrowser(String url) async {
@@ -43,13 +60,23 @@ class _FeedScreenState extends State<FeedScreen> {
     }
   }
 
-  GestureDetector _buildItemsForListView(BuildContext context, int index){
+  GestureDetector _buildItemsForListView(BuildContext context, int index, List<NewsArticle> newsArticle){
     return
       GestureDetector(
         onTap: () => setState(() {
-          _launched = _launchInBrowser(_newsArticles[index].url);
+          _launched = _launchInBrowser(newsArticle[index].url);
         }),
-        child: FeedCard(_newsArticles[index].title, _newsArticles[index].description, _newsArticles[index].urlToImage, _newsArticles[index].content.split('[')[0]),
+        child: FeedCard(newsArticle[index].title, newsArticle[index].description, newsArticle[index].urlToImage, newsArticle[index].content.split('[')[0]),
+      );
+  }
+
+  GestureDetector _buildItems(BuildContext context, NewsArticle newsArticle){
+    return
+      GestureDetector(
+        onTap: () => setState(() {
+          _launched = _launchInBrowser(newsArticle.url);
+        }),
+        child: FeedCard(newsArticle.title, newsArticle.description, newsArticle.urlToImage, newsArticle.content.split('[')[0]),
       );
   }
 
@@ -114,15 +141,23 @@ class _FeedScreenState extends State<FeedScreen> {
                                 ),
                               ],
                             ),
-                            Row(
-                              children: [
-                                Text(
-                                  "USUARIO",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                )
-                              ],
-                            ),
+                            FutureBuilder<String>(
+                              future: _username,
+                              builder: (context, snapshot){
+                                if(snapshot.hasData){
+                                  return Row(
+                                    children: [
+                                      Text(
+                                        (snapshot.data.split(' ')[0]).toUpperCase(),
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      )
+                                    ],
+                                  );
+                                }
+                                return Container();
+                              },
+                            )
                           ])),
                   Flexible(fit: FlexFit.tight, child: SizedBox()),
                   Image(
@@ -164,13 +199,32 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-            itemCount: _newsArticles.length+1,
-            itemBuilder: (context, index){
-              if(index == 0)
-                return _cabecalho();
-              return _buildItemsForListView(context, index-1);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _cabecalho(),
+          FutureBuilder<List<NewsArticle>>(
+            future: _newsArticles,
+            builder: (context, snapshot){
+              if(snapshot.hasData){
+                return Column(
+                  children:
+                  snapshot.data.map<Widget>((NewsArticle n){
+                    return _buildItems(context, n);
+                  }).toList()
+                  ,
+                );
+              }
+
+              else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
+
+              return CircularProgressIndicator();
             },
+          )
+        ],
+      ),
     );
 
   }

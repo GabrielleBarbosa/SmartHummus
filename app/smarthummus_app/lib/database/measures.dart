@@ -1,8 +1,4 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/news/web_service.dart';
 
 class Measures {
 
@@ -36,22 +32,6 @@ class Measures {
         isFull= snapshot.data['cheio'] == 0 ? false : true;
         gasMQ135= snapshot.data['gasMQ135']+0.0;
         date= snapshot.data['horario'];
-  }
-
-  static Future<Resource<List<Measures>>> get allLastDay async {
-
-    String uid = await Database.getUserUid();
-
-    String url = "https://smarthummus.herokuapp.com/medidas/dia?uid="+uid;
-    return Resource(
-        url: url,
-        parse: (response) {
-          final result = json.decode(response.body);
-          Iterable list = result;
-          return list.map((model) => Measures.fromJson(model)).toList();
-        }
-    );
-
   }
 
 }
