@@ -94,7 +94,7 @@ class _CommentCardState extends State<CommentCard> {
               Container(
                   width: MediaQuery.of(context).size.width / 1.75,
                   child: Expanded(
-                    child: Text(comment),
+                    child: Text(comment, textAlign: TextAlign.justify,),
                   ))
             ],
           )

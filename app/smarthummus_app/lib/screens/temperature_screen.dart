@@ -51,8 +51,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     }
     tempA.add(aux1);
     tempB.add(aux2);
-    aux1 = List();
-    aux2 = List();
+    aux1 = List<ChartContent>();
+    aux2 = List<ChartContent>();
 
     for (var m in _measures[1]) {
       aux1.add(ChartContent(
@@ -62,8 +62,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     }
     tempA.add(aux1);
     tempB.add(aux2);
-    aux1 = List();
-    aux2 = List();
+    aux1 = List<ChartContent>();
+    aux2 = List<ChartContent>();
 
     for (var m in _measures[2]) {
       aux1.add(ChartContent(

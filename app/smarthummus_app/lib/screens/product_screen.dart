@@ -1,56 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:smarthummusapp/database/product.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 
 class ProductScreen extends StatefulWidget {
+
+  Product _product;
+
+  ProductScreen(this._product);
+
   @override
-  _ProductScreenState createState() => _ProductScreenState();
+  _ProductScreenState createState() => _ProductScreenState(this._product);
 }
 
 class _ProductScreenState extends State<ProductScreen> {
   int quantidade = 1, estoque = 10;
+
+  Product _product;
+
+  _ProductScreenState(this._product);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    estoque = _product.stock;
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
       children: <Widget>[
-        Container(
-            height: 100,
-            color: Color.fromRGBO(148, 223, 0, 1),
-            child: Padding(
-              padding: EdgeInsets.only(top: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(SmartHummusIcons.shopping_cart,
-                      color: Colors.white.withOpacity(0.6)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
-                    child: Text(
-                      "MEU CARRINHO",
-                      style: GoogleFonts.raleway(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      child: Container(
-                        color: Colors.white.withOpacity(0.3),
-                        width: 40,
-                        child: Text(
-                          "0",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.raleway(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )),
         Stack(
           children: <Widget>[
             Container(
@@ -159,10 +141,12 @@ class _ProductScreenState extends State<ProductScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text("Quantidade"),
+                        SizedBox(height: 10,),
                         Row(
                           children: <Widget>[
                             ButtonTheme(
-                              padding: EdgeInsets.all(0),
+                              padding: EdgeInsets.zero,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               minWidth: 25,
                               height: 25,
                               child: RaisedButton(
@@ -173,19 +157,22 @@ class _ProductScreenState extends State<ProductScreen> {
                                 child: Container(
                                   child: Text("-"),
                                 ),
-
-                                onPressed: quantidade == 1 ? null :  (){
-                                  setState(() {
-                                    quantidade--;
-                                  });
-                                },
+                                onPressed: quantidade == 1
+                                    ? null
+                                    : () {
+                                        setState(() {
+                                          quantidade--;
+                                        });
+                                      },
                               ),
                             ),
-
-                            Text(quantidade.toString()),
-
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(quantidade.toString()),
+                            ),
                             ButtonTheme(
-                              padding: EdgeInsets.all(0),
+                              padding: EdgeInsets.zero,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               minWidth: 25,
                               height: 25,
                               child: RaisedButton(
@@ -196,23 +183,49 @@ class _ProductScreenState extends State<ProductScreen> {
                                 child: Container(
                                   child: Text("+"),
                                 ),
-
-                                onPressed: quantidade == estoque ? null :  (){
-                                  setState(() {
-                                    quantidade++;
-                                  });
-                                },
+                                onPressed: quantidade == estoque
+                                    ? null
+                                    : () {
+                                        setState(() {
+                                          quantidade++;
+                                        });
+                                      },
                               ),
                             ),
-
                           ],
                         )
                       ],
                     ),
                     Flexible(fit: FlexFit.tight, child: SizedBox()),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         Text("Preço"),
+                        Padding(
+                          padding: EdgeInsets.only(top: 10, bottom: 14),
+                          child: Text("R\$420,00",
+                              style: GoogleFonts.raleway(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(148, 223, 0, 1),
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                        RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                color: Color.fromRGBO(148, 223, 0, 1),
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Icon(SmartHummusIcons.shopping_cart, color: Colors.white,),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text("Adicionar", style: GoogleFonts.raleway(color: Colors.white),)
+                                    ],
+                                  ),
+                                ),
+                        onPressed: (){},)
                       ],
                     )
                   ],

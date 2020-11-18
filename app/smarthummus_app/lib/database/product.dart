@@ -1,5 +1,7 @@
 class Product{
-  String id, image, price, description, stock, seller, title;
+  String id, image, description, seller, title;
+  int stock;
+  double price;
 
   Product(this.title, this.description, this.id, this.image, this.price, this.seller, this.stock);
 }

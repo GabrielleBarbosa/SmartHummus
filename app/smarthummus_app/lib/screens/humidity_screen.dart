@@ -44,8 +44,8 @@ class _HumidityScreenState extends State<HumidityScreen> {
     }
     humA.add(aux1);
     humB.add(aux2);
-    aux1 = List();
-    aux2 = List();
+    aux1 = List<ChartContent>();
+    aux2 = List<ChartContent>();
 
     for (var m in _measures[1]) {
       aux1.add(ChartContent(
@@ -55,8 +55,8 @@ class _HumidityScreenState extends State<HumidityScreen> {
     }
     humA.add(aux1);
     humB.add(aux2);
-    aux1 = List();
-    aux2 = List();
+    aux1 = List<ChartContent>();
+    aux2 = List<ChartContent>();
 
     for (var m in _measures[2]) {
       aux1.add(ChartContent(
@@ -90,7 +90,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
                   child: LinearPercentIndicator(
                     width: MediaQuery.of(context).size.width / 1.8,
                     lineHeight: 23.0,
-                    percent: _atual.humA/100,
+                    percent: _atual.humA/100 > 1 ? 1.0 : (_atual.humA/100 < 0 ? 0.0 : _atual.humA/100),
                     backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
                     progressColor: Color.fromRGBO(0, 179, 224, 100.0),
                     leading: Padding(
@@ -108,7 +108,7 @@ class _HumidityScreenState extends State<HumidityScreen> {
                   child: LinearPercentIndicator(
                     width: MediaQuery.of(context).size.width / 1.8,
                     lineHeight: 23.0,
-                    percent: _atual.humA/100,
+                    percent: _atual.humB/100 > 1 ? 1.0 : (_atual.humB/100 < 0 ? 0.0 : _atual.humB/100),
                     backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
                     progressColor: Color.fromRGBO(0, 179, 224, 100.0),
                     leading: Padding(

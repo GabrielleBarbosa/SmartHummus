@@ -3,6 +3,7 @@ import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 import 'package:smarthummusapp/screens/manage_perfil_screen.dart';
 import 'package:smarthummusapp/screens/product_screen.dart';
+import 'package:smarthummusapp/screens/sales_screen.dart';
 import 'package:smarthummusapp/screens/shopping_screen.dart';
 
 import 'composter_screen.dart';
@@ -14,13 +15,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  static List<Widget> _pages = [FeedScreen(), ShoppingScreen(), ComposterScreen(), ProductScreen(), ManagePerfilScreen()];
+  static List<Widget> _pages = [FeedScreen(), ShoppingScreen(), ComposterScreen(), SalesScreen(), ManagePerfilScreen()];
+  PageController _pageController = PageController();
   final color = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: _pages[_selectedindex],
         bottomNavigationBar: Container(
           color: color,
           child: Container(
@@ -64,13 +65,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             )
         )
-    ));
+    ), body: PageView(
+      controller: _pageController,
+      children: _pages,
+      onPageChanged: (index){
+        setState(() {
+          _selectedindex = index;
+        });
+      },
+    ),);
   }
 
   int _selectedindex = 0;
-  void _tapped(int index) {
+  void _tapped(index) {
     setState(() {
       _selectedindex = index;
     });
+    _pageController.jumpToPage(index);
   }
 }

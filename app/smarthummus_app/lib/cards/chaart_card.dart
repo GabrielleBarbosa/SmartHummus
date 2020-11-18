@@ -1,5 +1,6 @@
 import 'package:fl_animated_linechart/chart/animated_line_chart.dart';
 import 'package:fl_animated_linechart/chart/area_line_chart.dart';
+import 'package:fl_animated_linechart/chart/line_chart.dart';
 import 'package:fl_animated_linechart/common/pair.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +28,7 @@ class _ChaartsCardState extends State<ChaartsCard> {
   Map<DateTime, double> line1;
   Map<DateTime, double> line2;
   Map<DateTime, double> line3;
-  AreaLineChart chart;
+  LineChart chart;
 
   _ChaartsCardState(this.values, this.tipo, this.cor1, this.cor2);
 
@@ -46,12 +47,12 @@ class _ChaartsCardState extends State<ChaartsCard> {
     }
     line2 = Map();
     for (int i = 0; i < values[1].length; i++) {
-      line1[DateTime.now().subtract(Duration(minutes: 60 * i))] =
+      line2[DateTime.now().subtract(Duration(minutes: 60 * i))] =
           (values[1])[i].y;
     }
     line3 = Map();
     for (int i = 0; i < values[2].length; i++) {
-      line1[DateTime.now().subtract(Duration(minutes: 60 * i))] =
+      line3[DateTime.now().subtract(Duration(minutes: 60 * i))] =
           (values[2])[i].y;
     }
   }
@@ -60,21 +61,21 @@ class _ChaartsCardState extends State<ChaartsCard> {
     setState(() {
       switch(dropdownValue){
         case 'ÚLTIMAS 24 HORAS':
-          chart = AreaLineChart.fromDateTimeMaps(
-              [line1], [cor1], ['%'],
-              gradients: [Pair(cor1.withOpacity(0.5), cor2.withOpacity(0.5))]);
+          chart = LineChart.fromDateTimeMaps(
+              [line1], [cor1], [tipo],
+              );
           break;
 
         case 'ÚLTIMOS 7 DIAS':
-          chart = AreaLineChart.fromDateTimeMaps(
-              [line2], [cor1], ['%'],
-              gradients: [Pair(cor1.withOpacity(0.5), cor2.withOpacity(0.5))]);
+          chart = LineChart.fromDateTimeMaps(
+              [line2], [cor1], [tipo],
+              );
           break;
 
         case 'ÚLTIMO MÊS':
-          chart = AreaLineChart.fromDateTimeMaps(
-              [line3], [cor1], ['%'],
-              gradients: [Pair(cor1.withOpacity(0.5), cor2.withOpacity(0.5))]);
+          chart = LineChart.fromDateTimeMaps(
+              [line3], [cor1], [tipo],
+              );
           break;
       }
     });
@@ -128,6 +129,7 @@ class _ChaartsCardState extends State<ChaartsCard> {
                             setState(() {
                               dropdownValue = newValue;
                             });
+                            updateChart();
                           },
                           items: <String>[
                             'ÚLTIMAS 24 HORAS',

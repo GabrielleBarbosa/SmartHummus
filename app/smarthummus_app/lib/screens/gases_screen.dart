@@ -13,7 +13,7 @@ class GasesScreen extends StatefulWidget {
   GasesScreen(this._measures);
 
   @override
-  _GasesScreenState createState() => _GasesScreenState(_measures);
+  _GasesScreenState createState() => _GasesScreenState(this._measures);
 }
 
 class _GasesScreenState extends State<GasesScreen> {
@@ -36,8 +36,8 @@ class _GasesScreenState extends State<GasesScreen> {
   void _makeChartArrays() {
     gasMQ2 = List<List<ChartContent>>();
     gasMQ135 = List<List<ChartContent>>();
-    var aux1 = List();
-    var aux2 = List();
+    var aux1 = List<ChartContent>();
+    var aux2 = List<ChartContent>();
 
     for (var m in _measures[0]) {
       aux1.add(ChartContent(
@@ -47,8 +47,8 @@ class _GasesScreenState extends State<GasesScreen> {
     }
     gasMQ2.add(aux1);
     gasMQ135.add(aux2);
-    aux1 = List();
-    aux2 = List();
+    aux1 = List<ChartContent>();
+    aux2 = List<ChartContent>();
 
     for (var m in _measures[1]) {
       aux1.add(ChartContent(
@@ -58,8 +58,8 @@ class _GasesScreenState extends State<GasesScreen> {
     }
     gasMQ2.add(aux1);
     gasMQ135.add(aux2);
-    aux1 = List();
-    aux2 = List();
+    aux1 = List<ChartContent>();
+    aux2 = List<ChartContent>();
 
     for (var m in _measures[2]) {
       aux1.add(ChartContent(

@@ -50,7 +50,7 @@ class _ComposterScreenState extends State<ComposterScreen> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      List<Measures> list = List();
+      List<Measures> list = List<Measures>();
       var decoded = jsonDecode(response.body);
       for(var a in decoded){
         list.add(Measures.fromJson(a));
@@ -67,7 +67,7 @@ class _ComposterScreenState extends State<ComposterScreen> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      List<Measures> list = List();
+      List<Measures> list = List<Measures>();
       var decoded = jsonDecode(response.body);
       for(var a in decoded){
         list.add(Measures.fromJson(a));
@@ -84,18 +84,18 @@ class _ComposterScreenState extends State<ComposterScreen> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      List<Measures> list = List();
+      List<Measures> list = List<Measures>();
       var decoded = jsonDecode(response.body);
       for(var a in decoded){
         list.add(Measures.fromJson(a));
       }
       m.add(list);
-      return m;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load measures');
     }
+    return m;
   }
 
   /*void _populateMeasures() async{
