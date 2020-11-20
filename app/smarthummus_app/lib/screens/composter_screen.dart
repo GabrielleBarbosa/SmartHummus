@@ -37,8 +37,9 @@ class _ComposterScreenState extends State<ComposterScreen> {
   void initState() {
     super.initState();
     _hasComposter = Database.hasComposter();
-    _measures = fetchMeasures();
-    _atual = Database.getMeasureNow();
+
+      _measures = fetchMeasures();
+      _atual = Database.getMeasureNow();
   }
 
   Future<List<List<Measures>>> fetchMeasures() async {
@@ -117,7 +118,10 @@ class _ComposterScreenState extends State<ComposterScreen> {
           return snapshot.data ? buildScreenWithComposter() : buildScreenWithoutComposter();
         else if (snapshot.hasError)
           return Text("Ocorreu um erro ao carregar dados");
-        return CircularProgressIndicator();
+        return Container(
+          alignment: Alignment.center,
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -173,14 +177,20 @@ class _ComposterScreenState extends State<ComposterScreen> {
                     else if(snapshot2.hasError){
                       return Text(snapshot2.error.toString());
                     }
-                    return CircularProgressIndicator();
+                    return Container(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator(),
+                    );
                   },
                 );
               }
               else if(snapshot.hasError){
                 return Text(snapshot.error.toString());
               }
-              return CircularProgressIndicator();
+              return Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              );
             },
           )
       ),

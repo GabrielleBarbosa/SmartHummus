@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/cards/product_card.dart';
 import 'package:smarthummusapp/database/product.dart';
+import 'package:smarthummusapp/database/database.dart';
+
+import 'package:smarthummusapp/database/instruction.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 
 class HomeShopping extends StatefulWidget {
 
   final Function(Product) viewProduct;
+
   HomeShopping(this.viewProduct);
 
   @override
@@ -14,6 +18,26 @@ class HomeShopping extends StatefulWidget {
 }
 
 class _HomeShoppingState extends State<HomeShopping> {
+
+  bool _initialScreen = true;
+  String _specificScreen = "Mais procurados";
+
+  Future<List<Product>> _products;
+
+
+  void _changeState(initial, specific) {
+    setState(() {
+      _initialScreen = initial;
+      _specificScreen = specific;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _products = Database.getProducts();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,70 +58,179 @@ class _HomeShoppingState extends State<HomeShopping> {
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 20),
-                child: Row(children: [
-                  Text("Mais procurados",
-                      style: GoogleFonts.raleway(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(105, 105, 105, 1))),
-                  Flexible(fit: FlexFit.tight, child: SizedBox()),
-                  GestureDetector(
-                    child: Text("Ver mais",
-                        style: GoogleFonts.raleway(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(105, 105, 105, 1))),
-                    onTap: (){
-                      widget.viewProduct(Product("","","","",6,"",6));
-                    }
-                    ,
-                  )
-                ]),
-              ),
-              ProductCard(Product("", "", "", "", 0, "", 0)),
-              Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 20),
-                child: Row(children: [
-                  Text("Novidades",
-                      style: GoogleFonts.raleway(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(105, 105, 105, 1))),
-                  Flexible(fit: FlexFit.tight, child: SizedBox()),
-                  GestureDetector(
-                    child: Text("Ver mais",
-                        style: GoogleFonts.raleway(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(105, 105, 105, 1))),
-                  )
-                ]),
-              ),
-              ProductCard(Product("", "", "", "", 0, "", 0)),
-              Padding(
-                padding: EdgeInsets.only(top: 30, bottom: 20),
-                child: Row(children: [
-                  Text("Lançamentos",
-                      style: GoogleFonts.raleway(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromRGBO(105, 105, 105, 1))),
-                  Flexible(fit: FlexFit.tight, child: SizedBox()),
-                  GestureDetector(
-                    child: Text("Ver mais",
-                        style: GoogleFonts.raleway(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                            color: Color.fromRGBO(105, 105, 105, 1))),
-                  )
-                ]),
-              ),
-              ProductCard(Product("", "", "", "", 0, "", 0)),
-              ProductCard(Product("", "", "", "", 0, "", 0)),
+              _initialScreen ? _buildInit() : _buildSpecific()
             ],
           ),
         ));
+  }
+
+  Widget _buildInit() {
+    return Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 30, bottom: 20),
+            child: Row(children: [
+              Text("Mais procurados",
+                  style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(105, 105, 105, 1))),
+              Flexible(fit: FlexFit.tight, child: SizedBox()),
+              GestureDetector(
+                  child: Text("Ver mais",
+                      style: GoogleFonts.raleway(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(105, 105, 105, 1))),
+                  onTap: () {
+                    _changeState(false, "Mais procurados");
+                  }
+              )
+            ]),
+          ),
+          FutureBuilder<List<Product>>(
+              future: _products,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                      children: snapshot.data.map<GestureDetector>((
+                          Product product) {
+                        return GestureDetector(
+                            onTap: () {
+                              widget.viewProduct(product);
+                            },
+                            child: ProductCard(product)
+                        );
+                      }).toList()
+                  );
+                }
+                if (snapshot.hasError)
+                  return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                          "Ocorreu um erro ao carregar dados, verifique sua conexão")
+                  );
+
+                return Container(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator()
+                );
+              }
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 30, bottom: 20),
+            child: Row(children: [
+              Text("Novidades",
+                  style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(105, 105, 105, 1))),
+              Flexible(fit: FlexFit.tight, child: SizedBox()),
+              GestureDetector(
+                  child: Text("Ver mais",
+                      style: GoogleFonts.raleway(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(105, 105, 105, 1))),
+                  onTap: () {
+                    _changeState(false, "Ver mais");
+                  }
+              )
+            ]),
+          ),
+          ProductCard(Product(
+              "Composteira",
+              "",
+              "",
+              "",
+              "",
+              420.00,
+              "De VrRms",
+              0)),
+          Padding(
+            padding: EdgeInsets.only(top: 30, bottom: 20),
+            child: Row(children: [
+              Text("Lançamentos",
+                  style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(105, 105, 105, 1))),
+              Flexible(fit: FlexFit.tight, child: SizedBox()),
+              GestureDetector(
+                  child: Text("Ver mais",
+                      style: GoogleFonts.raleway(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(105, 105, 105, 1))),
+                  onTap: () {
+                    _changeState(false, "Lançamentos");
+                  }
+              )
+            ]),
+          ),
+          ProductCard(Product(
+              "Composteira",
+              "",
+              "",
+              "",
+              "",
+              420.00,
+              "De VrRms",
+              0)),
+          ProductCard(Product(
+              "Composteira",
+              "",
+              "",
+              "",
+              "",
+              420.00,
+              "De VrRms",
+              0)),
+        ]
+    );
+  }
+
+  Widget _buildSpecific() {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(top: 30, bottom: 20),
+            child: Text(_specificScreen,
+                style: GoogleFonts.raleway(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromRGBO(105, 105, 105, 1))),),
+          FutureBuilder<List<Product>>(
+              future: _products,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                      children: snapshot.data.map<GestureDetector>((
+                          Product product) {
+                        return GestureDetector(
+                            onTap: () {
+                              widget.viewProduct(product);
+                            },
+                            child: ProductCard(product)
+                        );
+                      }).toList()
+                  );
+                }
+                if (snapshot.hasError)
+                  return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                          "Ocorreu um erro ao carregar dados, verifique sua conexão")
+                  );
+
+                return Container(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator()
+                );
+              }
+          )
+        ]
+    );
   }
 }

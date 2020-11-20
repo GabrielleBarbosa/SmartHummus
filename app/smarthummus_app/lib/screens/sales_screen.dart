@@ -11,6 +11,10 @@ class _SalesScreenState extends State<SalesScreen> {
 
   PageController _pageController = PageController();
 
+  void _goToAddProd(){
+    _pageController.jumpToPage(1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +22,7 @@ class _SalesScreenState extends State<SalesScreen> {
         physics:new NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          SalesInfoScreen(),
+          SalesInfoScreen(_goToAddProd),
           AddProductSalesScreen()
         ],
       ),

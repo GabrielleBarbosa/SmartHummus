@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/cards/product_card.dart';
 import 'package:smarthummusapp/database/product.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
+import 'package:smarthummusapp/screens/cart_screen.dart';
 import 'package:smarthummusapp/screens/home_shopping.dart';
 import 'package:smarthummusapp/screens/product_screen.dart';
 
@@ -15,15 +16,34 @@ class ShoppingScreen extends StatefulWidget {
 class _ShoppingScreenState extends State<ShoppingScreen> {
   PageController _pageController = PageController();
   Product _product;
+  List<Map<String, dynamic>> _cart = List<Map<String, dynamic>>();
+  int _qtItems = 0;
 
-  void viewProduct(Product){
-    if(Product != null){
+  void _viewProduct(Product){
       setState(() {
         _product = Product;
       });
 
       _pageController.jumpToPage(1);
-    }
+  }
+
+  void _addToCart (product, quantity){
+    setState(() {
+      _cart.add({'product' : product, 'quantity' : quantity});
+      _qtItems += quantity;
+    });
+    _pageController.jumpToPage(2);
+  }
+
+  void _removeFromCart (index, quantity){
+    setState(() {
+      _cart.removeAt(index);
+      _qtItems -= quantity;
+    });
+  }
+
+  void _returnShopping(){
+    _pageController.jumpToPage(0);
   }
 
   @override
@@ -53,9 +73,9 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
                   color: Colors.white.withOpacity(0.3),
                   width: 40,
                   child: Text(
-                    "0",
+                    _qtItems.toString(),
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.raleway(color: Colors.white),
+                    style: GoogleFonts.comfortaa(color: Colors.white),
                   ),
                 ),
               ),
@@ -68,8 +88,9 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
         physics:new NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          HomeShopping(viewProduct),
-          ProductScreen(_product),
+          HomeShopping(_viewProduct),
+          ProductScreen(_product, _addToCart),
+          CartScreen(_cart, _viewProduct, _removeFromCart, _returnShopping)
         ],
       ),
     );

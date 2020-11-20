@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:smarthummusapp/cards/feed_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/database/database.dart';
-import 'file:///C:/Users/DELL/Documents/GitHub/SmartHummus/app/smarthummus_app/lib/database/news_article.dart';
+import 'package:smarthummusapp/database/news_article.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:http/http.dart' as http;
@@ -60,15 +60,15 @@ class _FeedScreenState extends State<FeedScreen> {
     }
   }
 
-  GestureDetector _buildItemsForListView(BuildContext context, int index, List<NewsArticle> newsArticle){
+  /*GestureDetector _buildItemsForListView(BuildContext context, int index, List<NewsArticle> newsArticle){
     return
       GestureDetector(
         onTap: () => setState(() {
           _launched = _launchInBrowser(newsArticle[index].url);
         }),
-        child: FeedCard(newsArticle[index].title, newsArticle[index].description, newsArticle[index].urlToImage, newsArticle[index].content.split('[')[0]),
+        child: FeedCard(newsArticle[index].title, newsArticle[index].description, newsArticle[index].urlToImage, newsArticle[index].content != null ?  newsArticle[index].content.split('[')[0] : ""),
       );
-  }
+  }*/
 
   GestureDetector _buildItems(BuildContext context, NewsArticle newsArticle){
     return
@@ -76,7 +76,7 @@ class _FeedScreenState extends State<FeedScreen> {
         onTap: () => setState(() {
           _launched = _launchInBrowser(newsArticle.url);
         }),
-        child: FeedCard(newsArticle.title, newsArticle.description, newsArticle.urlToImage, newsArticle.content.split('[')[0]),
+        child: FeedCard(newsArticle.title, newsArticle.description, newsArticle.urlToImage, newsArticle.content != null ?  newsArticle.content.split('[')[0] : ""),
       );
   }
 
@@ -220,7 +220,10 @@ class _FeedScreenState extends State<FeedScreen> {
                 return Text(snapshot.error.toString());
               }
 
-              return CircularProgressIndicator();
+              return Container(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              );
             },
           )
         ],

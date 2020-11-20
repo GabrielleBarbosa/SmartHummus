@@ -18,11 +18,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController cpasswordController = TextEditingController();
 
   void _signUp() async{
-    String email = emailController.text, pass = passwordController.text, cpass = cpasswordController.text;
-    if(email!= "" && pass!= "" && cpass!="") {
+    String email = emailController.text, pass = passwordController.text, cpass = cpasswordController.text, name = nameController.text;
+    if(email!= "" && pass!= "" && cpass!="" && name != "") {
       if(pass == cpass) {
         if(email.contains("@")) {
-            FirebaseUser user = await Database.signUp(email, pass);
+            FirebaseUser user = await Database.signUp(email, pass, name);
             if(user != null) {
               Navigator.pop(context);
               Navigator.push(context,

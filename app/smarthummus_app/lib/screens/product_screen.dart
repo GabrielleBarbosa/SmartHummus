@@ -7,8 +7,9 @@ import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 class ProductScreen extends StatefulWidget {
 
   Product _product;
+  Function(Product, int) _addToCart;
 
-  ProductScreen(this._product);
+  ProductScreen(this._product, this._addToCart);
 
   @override
   _ProductScreenState createState() => _ProductScreenState(this._product);
@@ -117,7 +118,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             width: MediaQuery.of(context).size.width / 1.5,
                             child: Expanded(
                               child: Text(
-                                  "- Capacidade: 15L \n- Dimensões: 43 cm x 37 cm x 45 cm \n- Não produz odor \n- Não acompanha minhocas  \n\n*Imagens meramente ilustrativas*",
+                                  _product.details.replaceAll('\\n', '\n'),
                                   style: GoogleFonts.raleway(
                                       fontSize: 14,
                                       color: Color.fromRGBO(55, 55, 55, 1.0))),
@@ -225,7 +226,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     ],
                                   ),
                                 ),
-                        onPressed: (){},)
+                        onPressed: estoque == 0 ? null : (){widget._addToCart(widget._product, quantidade);},)
                       ],
                     )
                   ],

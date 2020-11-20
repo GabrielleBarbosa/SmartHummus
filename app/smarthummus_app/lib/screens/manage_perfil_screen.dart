@@ -38,8 +38,9 @@ class _ManagePerfilScreenState extends State<ManagePerfilScreen> {
           ),
           Scaffold(
               appBar: AppBar(
-                title: Text("Produtos"),
+                title: Text("Meus Dados"),
                 centerTitle: true,
+                backgroundColor: Color.fromRGBO(30, 67, 255, 0.5),
               ),
               drawer: CustomDrawer(_pageController),
               body: SettingScreen()

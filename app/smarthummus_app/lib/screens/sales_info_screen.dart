@@ -5,6 +5,11 @@ import 'package:smarthummusapp/cards/product_card_sales.dart';
 import 'package:smarthummusapp/database/product.dart';
 
 class SalesInfoScreen extends StatefulWidget {
+
+  Function() goToAddProd;
+
+  SalesInfoScreen(this.goToAddProd);
+
   @override
   _SalesInfoScreenState createState() => _SalesInfoScreenState();
 }
@@ -152,13 +157,36 @@ class _SalesInfoScreenState extends State<SalesInfoScreen> {
             ],
           ),
 
-          Text("MEUS PRODUTOS À VENDA",
-              style: GoogleFonts.raleway(
-                  fontSize: 18,
-                  color: Color.fromRGBO(55, 55, 55, 0.5),
-                  fontWeight: FontWeight.w700)),
+          Row(
+            children: [
+              Text("MEUS PRODUTOS À VENDA",
+                  style: GoogleFonts.raleway(
+                      fontSize: 18,
+                      color: Color.fromRGBO(55, 55, 55, 0.5),
+                      fontWeight: FontWeight.w700)),
+              Flexible(fit: FlexFit.tight, child: SizedBox(),),
+              ButtonTheme(
+                padding: EdgeInsets.zero,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                height: 40,
+                minWidth: 40,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  color: Color.fromRGBO(169, 255, 0, 1.0),
+                  child: Container(
+                    child: Text("+", style: GoogleFonts.raleway(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white),),
+                  ),
+                  onPressed: (){
+                    widget.goToAddProd();
+                  },
+                ),
+              ),
+            ],
+          ),
 
-          ProductCardSales(Product("", "", "", "", 0, "", 0))
+          ProductCardSales(Product("", "", "", "", "", 0, "", 0))
 
         ],
       ),

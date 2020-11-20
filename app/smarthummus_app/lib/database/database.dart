@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smarthummusapp/database/product.dart';
 
 import 'instruction.dart';
 import 'measures.dart';
@@ -46,6 +47,7 @@ class Database {
         await hasComposter();
       }catch(e){
         setHasComposter(authResult.user.uid, false);
+        setIsSeller(authResult.user.uid, false);
       }
 
       return authResult.user;
@@ -54,10 +56,19 @@ class Database {
     }
   }
 
-  static Future<FirebaseUser> signUp(String email, String password) async{
+  static Future<FirebaseUser> signUp(String email, String password, String name) async{
       try{
         final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
         await setHasComposter(authResult.user.uid, false);
+        await setIsSeller(authResult.user.uid, false);
+
+        UserUpdateInfo info = new UserUpdateInfo();
+        info.displayName = name;
+
+        var user = await getUser();
+        await user.updateProfile(info);
+        await user.reload();
+
         return authResult.user;
       }catch(e){
         debugPrint(e.toString());
@@ -93,6 +104,14 @@ class Database {
       throw Exception (e.toString());
     }
   }
+
+  static Future<void> setIsSeller(uid, newValue) async{
+    try{
+      await Firestore.instance.collection('users').document(uid).setData({'isVendedor': newValue});
+    }catch(e){
+      throw Exception (e.toString());
+    }
+  }
   /*static Future<List<Measures>> getMeasures() async{
     String uid = await getUser().then((value) => value.uid);
     QuerySnapshot allData = await Firestore.instance.collection("medidas").getDocuments();
@@ -116,18 +135,15 @@ class Database {
     }
   }
 
-  static Future<List<Instruction>> getInstructions() async{
-    try{
-      QuerySnapshot data = await Firestore.instance.collection("instrucoes").orderBy('number').getDocuments();
-      List<Instruction> instructions = List<Instruction>();
-      data.documents.forEach((element) {
-        instructions.add(Instruction.fromDocument(element));
-      });
-      if(instructions.length == 0)
-        return null;
-      return instructions;
+  static Future<bool> isSeller() async{
+    try {
+      String uid = await getUserUid();
+      DocumentSnapshot data = await Firestore.instance.collection('users').document(uid).get();
+
+      return data.data['isVendedor'];
+
     }catch(e){
-      return null;
+      throw Exception(e.toString());
     }
   }
 
@@ -142,6 +158,39 @@ class Database {
       return m;
     }catch(e){
       throw Exception(e.toString());
+    }
+  }
+
+  static Future<List<Product>> getProducts() async {
+    try{
+      QuerySnapshot data = await Firestore.instance.collection('produtos').getDocuments();
+
+      List<Product> products = List<Product>();
+      data.documents.forEach((element) {
+        products.add(Product.fromDocument(element));
+      });
+
+      if(products.length == 0)
+        return null;
+
+      return products;
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<List<Instruction>> getInstructions() async{
+    try{
+      QuerySnapshot data = await Firestore.instance.collection("instrucoes").orderBy('number').getDocuments();
+      List<Instruction> instructions = List<Instruction>();
+      data.documents.forEach((element) {
+        instructions.add(Instruction.fromDocument(element));
+      });
+      if(instructions.length == 0)
+        return null;
+      return instructions;
+    }catch(e){
+      return null;
     }
   }
 }

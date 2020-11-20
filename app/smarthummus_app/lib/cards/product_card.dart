@@ -46,10 +46,10 @@ class _ProductCardState extends State<ProductCard> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Composteira SmartHummus", style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
-                            Text("De VrRms", style: GoogleFonts.raleway(fontSize: 11, color: Color.fromRGBO(55, 55, 55, 1.0))),
+                            Text(product.title, style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
+                            Text("De " + product.seller, style: GoogleFonts.raleway(fontSize: 11, color: Color.fromRGBO(55, 55, 55, 1.0))),
                             SizedBox(height: 10,),
-                            Text("R\$420,00", style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(180, 240, 0, 1.0), fontWeight: FontWeight.w700))
+                            Text("R\$"+product.price.toString(), style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(180, 240, 0, 1.0), fontWeight: FontWeight.w700))
                           ],
                         ),
                       ),
