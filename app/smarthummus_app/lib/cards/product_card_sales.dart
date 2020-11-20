@@ -27,7 +27,7 @@ class _ProductCardSalesState extends State<ProductCardSales> {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
             BoxShadow(
-                color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+                color: Colors.black12, spreadRadius: 0, blurRadius: 10),
           ],
         ),
         child: ClipRRect(

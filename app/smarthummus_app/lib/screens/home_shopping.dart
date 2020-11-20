@@ -56,9 +56,7 @@ class _HomeShoppingState extends State<HomeShopping> {
                   )
                 ]),
               ),
-              GestureDetector(
-                child: ProductCard(Product("", "", "", "", 0, "", 0)),
-              ),
+              ProductCard(Product("", "", "", "", 0, "", 0)),
               Padding(
                 padding: EdgeInsets.only(top: 30, bottom: 20),
                 child: Row(children: [
@@ -96,6 +94,7 @@ class _HomeShoppingState extends State<HomeShopping> {
                   )
                 ]),
               ),
+              ProductCard(Product("", "", "", "", 0, "", 0)),
               ProductCard(Product("", "", "", "", 0, "", 0)),
             ],
           ),

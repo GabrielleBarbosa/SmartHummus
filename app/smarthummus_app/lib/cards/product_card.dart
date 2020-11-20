@@ -21,42 +21,43 @@ class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130,
+        margin: EdgeInsets.only(top: 10, bottom: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
             BoxShadow(
-                color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+                color: Colors.black12, spreadRadius: 0, blurRadius: 10),
           ],
         ),
         child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Row(
-                children: [
-                  Image(
-                    image: AssetImage('assets/images/4.png'),
-                    fit: BoxFit.cover,
-                    width: 80,),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, top: 20, bottom: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Composteira SmartHummus", style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
-                        Text("De VrRms", style: GoogleFonts.raleway(fontSize: 11, color: Color.fromRGBO(55, 55, 55, 1.0))),
-                        Flexible(fit: FlexFit.tight, child: SizedBox()),
-                        Text("R\$420,00", style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(180, 240, 0, 1.0), fontWeight: FontWeight.w700))
-                      ],
-                    ),
-                  )
-                ],
-              ),
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    children: [
+                      Image(
+                        image: AssetImage('assets/images/4.png'),
+                        fit: BoxFit.cover,
+                        width: 50,),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, top: 20, bottom: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Composteira SmartHummus", style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
+                            Text("De VrRms", style: GoogleFonts.raleway(fontSize: 11, color: Color.fromRGBO(55, 55, 55, 1.0))),
+                            SizedBox(height: 10,),
+                            Text("R\$420,00", style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(180, 240, 0, 1.0), fontWeight: FontWeight.w700))
+                          ],
+                        ),
+                      ),
+                    ],
+
+                  ),
+                )
             )
-          )
         )
     );
   }
