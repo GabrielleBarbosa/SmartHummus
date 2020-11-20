@@ -54,18 +54,10 @@ class Database {
     }
   }
 
-  static Future<FirebaseUser> signUp(String email, String password, String name) async{
+  static Future<FirebaseUser> signUp(String email, String password) async{
       try{
         final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
         await setHasComposter(authResult.user.uid, false);
-
-        UserUpdateInfo info = new UserUpdateInfo();
-        info.displayName = name;
-
-        var user = await getUser();
-        await user.updateProfile(info);
-        await user.reload();
-
         return authResult.user;
       }catch(e){
         debugPrint(e.toString());

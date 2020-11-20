@@ -117,10 +117,7 @@ class _ComposterScreenState extends State<ComposterScreen> {
           return snapshot.data ? buildScreenWithComposter() : buildScreenWithoutComposter();
         else if (snapshot.hasError)
           return Text("Ocorreu um erro ao carregar dados");
-        return Container(
-          alignment: Alignment.center,
-          child: CircularProgressIndicator(),
-        );
+        return CircularProgressIndicator();
       },
     );
   }
@@ -176,20 +173,14 @@ class _ComposterScreenState extends State<ComposterScreen> {
                     else if(snapshot2.hasError){
                       return Text(snapshot2.error.toString());
                     }
-                    return Container(
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator(),
-                    );
+                    return CircularProgressIndicator();
                   },
                 );
               }
               else if(snapshot.hasError){
                 return Text(snapshot.error.toString());
               }
-              return Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(),
-              );
+              return CircularProgressIndicator();
             },
           )
       ),

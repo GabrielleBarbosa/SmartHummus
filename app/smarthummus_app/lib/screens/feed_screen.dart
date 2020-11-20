@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:smarthummusapp/cards/feed_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/database/database.dart';
-import 'package:smarthummusapp/database/news_article.dart';
+import 'file:///C:/Users/DELL/Documents/GitHub/SmartHummus/app/smarthummus_app/lib/database/news_article.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:http/http.dart' as http;
@@ -220,10 +220,7 @@ class _FeedScreenState extends State<FeedScreen> {
                 return Text(snapshot.error.toString());
               }
 
-              return Container(
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(),
-              );
+              return CircularProgressIndicator();
             },
           )
         ],
