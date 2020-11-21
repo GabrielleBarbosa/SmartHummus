@@ -15,6 +15,10 @@ class _SalesScreenState extends State<SalesScreen> {
     _pageController.jumpToPage(1);
   }
 
+  void _returnToHomeSeller(){
+    _pageController.jumpToPage(0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +27,7 @@ class _SalesScreenState extends State<SalesScreen> {
         controller: _pageController,
         children: [
           SalesInfoScreen(_goToAddProd),
-          AddProductSalesScreen()
+          AddProductSalesScreen(_returnToHomeSeller)
         ],
       ),
     );

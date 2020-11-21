@@ -49,10 +49,11 @@ class _ProductScreenState extends State<ProductScreen> {
                     alignment: Alignment.center,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15.0),
-                      child: Image(
-                          image: AssetImage("assets/images/perfil.png"),
+                      child: Image.network(
+                          _product.image,
                           fit: BoxFit.cover,
-                          width: 140),
+                          width: 140,
+                      height:140),
                     )))
           ],
         ),
@@ -66,7 +67,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                Text("Composteira SmartHummus".toUpperCase(),
+                Text(_product.title.toUpperCase(),
                     style: GoogleFonts.raleway(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
@@ -85,7 +86,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         width: MediaQuery.of(context).size.width / 1.5,
                         child: Expanded(
                           child: Text(
-                              "Composteira doméstica automatizada integrada ao aplicativo do SmartHummus. Seja mais sustentável de forma simples e prática!",
+                              _product.description,
                               style: GoogleFonts.raleway(
                                   fontSize: 14,
                                   color: Color.fromRGBO(55, 55, 55, 1.0))),
@@ -204,7 +205,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         Text("Preço"),
                         Padding(
                           padding: EdgeInsets.only(top: 10, bottom: 14),
-                          child: Text("R\$420,00",
+                          child: Text("R\$"+_product.price.toString(),
                               style: GoogleFonts.raleway(
                                   fontSize: 20,
                                   color: Color.fromRGBO(148, 223, 0, 1),

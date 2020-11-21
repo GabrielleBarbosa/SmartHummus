@@ -48,7 +48,7 @@ class _FeedCardState extends State<FeedCard> {
                         borderRadius: BorderRadius.all(Radius.circular(18.0)),
                         child: Column(
                           children: [
-                            urlToImage != null ? Image.network(urlToImage):Container(height: 200,),
+                            urlToImage != null && urlToImage != "" ? Image.network(urlToImage):Container(height: 200,),
                             content != null ? Padding(padding: EdgeInsets.all(20),child:Text(content, textAlign: TextAlign.justify,)):Container()
                           ],
                         )

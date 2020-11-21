@@ -31,18 +31,18 @@ dependencies:
   google_fonts: ^1.1.0
   percent_indicator: ^2.1.5
 
-  cloud_firestore: ^0.13.0+1
-  firebase_auth: ^0.15.3
-  google_sign_in: ^4.1.1
+  cloud_firestore: ^0.13.0+1 #banco de dados
+  firebase_auth: ^0.15.3     #autenticação (para login)
+  google_sign_in: ^4.1.1     #autenticação com o google
   firebase_database: ^3.1.6
   firebase_core: ^0.4.4+3
+  firebase_storage: ^3.1.1   #database de imagens do firebase
+
+  image_picker: ^0.6.7+14     #pegar imagem da galeria
 
   url_launcher: ^5.4.11
   fl_chart: ^0.12.0
   fl_animated_linechart: ^1.1.4
-
-  rxdart: ^0.24.1
-  dio: ^3.0.10
 
 dev_dependencies:
   flutter_test:

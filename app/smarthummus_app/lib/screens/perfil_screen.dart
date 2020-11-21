@@ -33,7 +33,8 @@ class _PerfilScreenState extends State<PerfilScreen> {
                       child: Image(
                           image: AssetImage("assets/images/perfil.png"),
                           fit: BoxFit.cover,
-                          width: 120),
+                          width: 120,
+                      height: 120,),
                     )))
           ],
         ),

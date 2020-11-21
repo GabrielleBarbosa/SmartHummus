@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/cards/product_card_sales.dart';
 import 'package:smarthummusapp/database/product.dart';
+import 'package:smarthummusapp/database/database.dart';
 
 class SalesInfoScreen extends StatefulWidget {
 
@@ -15,6 +16,26 @@ class SalesInfoScreen extends StatefulWidget {
 }
 
 class _SalesInfoScreenState extends State<SalesInfoScreen> {
+
+  String oi;
+  Future<List<Product>> _products;
+
+  void _deleteProduct(String id) async{
+    await Database.deleteProduct(id);
+  }
+
+  void _reload(){
+    setState((){
+      _products = Database.getMyProducts();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _products = Database.getMyProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -186,10 +207,37 @@ class _SalesInfoScreenState extends State<SalesInfoScreen> {
             ],
           ),
 
-          ProductCardSales(Product("", "", "", "", "", 0, "", 0))
+          _loadProducts()
 
         ],
       ),
     ));
+  }
+
+  Widget _loadProducts(){
+    return FutureBuilder<List<Product>>(
+              future: _products,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                      children: snapshot.data.map<ProductCardSales>((
+                          Product product) {
+                        return  ProductCardSales(product, _deleteProduct, _reload);
+                      }).toList()
+                  );
+                }
+                if (snapshot.hasError)
+                  return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                          "Ocorreu um erro ao carregar dados, verifique sua conexão")
+                  );
+
+                return Container(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator()
+                );
+              }
+          );
   }
 }

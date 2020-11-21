@@ -6,8 +6,10 @@ import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 class ProductCardSales extends StatefulWidget {
 
   Product product;
+  Function(String id) deleteProduct;
+  Function() reload;
 
-  ProductCardSales(this.product);
+  ProductCardSales(this.product, this.deleteProduct, this.reload);
 
   @override
   _ProductCardSalesState createState() => _ProductCardSalesState(this.product);
@@ -16,13 +18,17 @@ class ProductCardSales extends StatefulWidget {
 class _ProductCardSalesState extends State<ProductCardSales> {
 
   Product product;
+  bool _deleting = false;
 
   _ProductCardSalesState(this.product);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 20),
+    return _deleting
+        ? Container(
+        child: CircularProgressIndicator(), alignment: Alignment.center, height: 40)
+        : Container(
+        margin: EdgeInsets.only(top: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
@@ -38,6 +44,11 @@ class _ProductCardSalesState extends State<ProductCardSales> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
+                      product.image != "" ? Image.network(
+                        product.image,
+                        fit: BoxFit.cover,
+                        width: 50,
+                        height: 50,) :
                       Image(
                         image: AssetImage('assets/images/4.png'),
                         fit: BoxFit.cover,
@@ -47,15 +58,30 @@ class _ProductCardSalesState extends State<ProductCardSales> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Composteira SmartHummus", style: GoogleFonts.raleway(fontSize: 12, color: Color.fromRGBO(55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
-                            Text("R\$420,00", style: GoogleFonts.raleway(fontSize: 20, color: Color.fromRGBO(180, 240, 0, 1.0), fontWeight: FontWeight.w700))
+                            Text(product.title, style: GoogleFonts.raleway(
+                                fontSize: 12, color: Color.fromRGBO(
+                                55, 55, 55, 1.0), fontWeight: FontWeight.w700)),
+                            Text("R\$" + product.price.toString(),
+                                style: GoogleFonts.raleway(
+                                    fontSize: 20,
+                                    color: Color.fromRGBO(180, 240, 0, 1.0),
+                                    fontWeight: FontWeight.w700))
                           ],
                         ),
                       ),
-                      Flexible(fit: FlexFit.tight,child: SizedBox(),),
-                      Icon(Icons.restore_from_trash, size: 30, color: Colors.red,),
+                      Flexible(fit: FlexFit.tight, child: SizedBox(),),
+                      IconButton(
+                          onPressed: () async {
+                            setState(() {
+                              _deleting = true;
+                            });
+                            await widget.deleteProduct(product.id);
+                            widget.reload();
+                          },
+                          icon: Icon(Icons.restore_from_trash, size: 30,
+                            color: Colors.red,)),
                       SizedBox(width: 5,),
-                      Icon(Icons.edit,  size: 30, color: Colors.blue,),
+                      Icon(Icons.edit, size: 30, color: Colors.blue,),
                     ],
 
                   ),

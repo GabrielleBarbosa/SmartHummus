@@ -37,6 +37,11 @@ class _ProductCardState extends State<ProductCard> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
+                      product.image != "" ? Image.network(
+                        product.image,
+                        fit: BoxFit.cover,
+                        width: 50,
+                        height: 50,) :
                       Image(
                         image: AssetImage('assets/images/4.png'),
                         fit: BoxFit.cover,

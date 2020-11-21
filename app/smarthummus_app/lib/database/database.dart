@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -163,15 +166,35 @@ class Database {
 
   static Future<List<Product>> getProducts() async {
     try{
-      QuerySnapshot data = await Firestore.instance.collection('produtos').getDocuments();
+      QuerySnapshot data = await Firestore.instance.collection('produtos').orderBy('data').getDocuments();
 
       List<Product> products = List<Product>();
       data.documents.forEach((element) {
-        products.add(Product.fromDocument(element));
+        var p = Product.fromDocument(element);
+        p.id = element.documentID;
+        products.add(p);
       });
 
       if(products.length == 0)
         return null;
+
+      return products;
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<List<Product>> getMyProducts() async {
+    try{
+      String uid = await getUserUid();
+      QuerySnapshot data = await Firestore.instance.collection('produtos').where('uidVendedor', isEqualTo: uid).getDocuments();
+
+      List<Product> products = List<Product>();
+      data.documents.forEach((element) {
+        var p = Product.fromDocument(element);
+        p.id = element.documentID;
+        products.add(p);
+      });
 
       return products;
     }catch(e){
@@ -191,6 +214,43 @@ class Database {
       return instructions;
     }catch(e){
       return null;
+    }
+  }
+
+  static Future<String> saveImageOnStorage(File imgFile) async{
+    try{
+      String uid = await getUserUid();
+
+      StorageUploadTask task = FirebaseStorage.instance.ref()
+          .child('produtos')
+          .child(uid + DateTime.now().millisecondsSinceEpoch.toString())
+          .putFile(imgFile);
+
+      StorageTaskSnapshot taskSnapshot = await task.onComplete;
+      String url = await taskSnapshot.ref.getDownloadURL();
+      return url;
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<void> saveNewProduct(Product p, File f) async{
+    try{
+      p.image = await saveImageOnStorage(f);
+      var user = await getUser();
+      p.sellerUid = user.uid;
+      p.seller = user.displayName.split(' ')[0];
+      await Firestore.instance.collection('produtos').add(p.toMap());
+    }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<void> deleteProduct(String id) async{
+    try{
+      await Firestore.instance.collection('produtos').document(id).delete();
+    }catch(e){
+      throw Exception(e.toString());
     }
   }
 }

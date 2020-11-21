@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smarthummusapp/cards/product_card.dart';
 import 'package:smarthummusapp/database/product.dart';
 import 'package:smarthummusapp/database/database.dart';
-
-import 'package:smarthummusapp/database/instruction.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 
 class HomeShopping extends StatefulWidget {
@@ -92,8 +90,12 @@ class _HomeShoppingState extends State<HomeShopping> {
               future: _products,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+
+                  var index = snapshot.data.length < 3 ? snapshot.data.length : 2;
+                  var display = snapshot.data.sublist(0, index);
+
                   return Column(
-                      children: snapshot.data.map<GestureDetector>((
+                      children: display.map<GestureDetector>((
                           Product product) {
                         return GestureDetector(
                             onTap: () {
@@ -143,10 +145,9 @@ class _HomeShoppingState extends State<HomeShopping> {
               "",
               "",
               "",
-              "",
               420.00,
-              "De VrRms",
-              0)),
+              0,
+          seller: "VrRms",)),
           Padding(
             padding: EdgeInsets.only(top: 30, bottom: 20),
             child: Row(children: [
@@ -169,23 +170,21 @@ class _HomeShoppingState extends State<HomeShopping> {
             ]),
           ),
           ProductCard(Product(
-              "Composteira",
-              "",
-              "",
-              "",
-              "",
-              420.00,
-              "De VrRms",
-              0)),
+            "Composteira",
+            "",
+            "",
+            "",
+            420.00,
+            0,
+            seller: "VrRms",)),
           ProductCard(Product(
-              "Composteira",
-              "",
-              "",
-              "",
-              "",
-              420.00,
-              "De VrRms",
-              0)),
+            "Composteira",
+            "",
+            "",
+            "",
+            420.00,
+            0,
+            seller: "VrRms",)),
         ]
     );
   }
