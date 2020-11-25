@@ -160,9 +160,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
           child: Column(
             children: <Widget>[
               Image(
-                  image: AssetImage("assets/images/perfil.png"),
+                  image: AssetImage("assets/images/composter-off.png"),
                   fit: BoxFit.cover,
-                  width: 100),
+                  width: 150),
               SizedBox(height: 10),
               Text(
                 "Parece que você ainda não\ntem uma composteira :(",

@@ -13,14 +13,10 @@ class ProductCartCard extends StatefulWidget {
 
   @override
   _ProductCartCardState createState() =>
-      _ProductCartCardState(this.product, this.quantity);
+      _ProductCartCardState();
 }
 
 class _ProductCartCardState extends State<ProductCartCard> {
-  Product product;
-  int quantity;
-
-  _ProductCartCardState(this.product, this.quantity);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +24,7 @@ class _ProductCartCardState extends State<ProductCartCard> {
       children: [
         Padding(
           padding: EdgeInsets.only(right: 20),
-          child: Text(quantity.toString(),
+          child: Text(widget.quantity.toString(),
               style: GoogleFonts.raleway(
                   fontSize: 28,
                   color: Color.fromRGBO(55, 55, 55, 1.0),
@@ -39,12 +35,12 @@ class _ProductCartCardState extends State<ProductCartCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(product.title,
+              Text(widget.product.title,
                   style: GoogleFonts.raleway(
                       fontSize: 12,
                       color: Color.fromRGBO(55, 55, 55, 1.0),
                       fontWeight: FontWeight.w700)),
-              Text("R\$" + product.price.toString(),
+              Text("R\$" + widget.product.price.toString(),
                   style: GoogleFonts.raleway(
                       fontSize: 20,
                       color: Color.fromRGBO(180, 240, 0, 1.0),

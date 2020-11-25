@@ -17,16 +17,28 @@ class ComposterScreen extends StatefulWidget {
   _ComposterScreenState createState() => _ComposterScreenState();
 }
 
-class _ComposterScreenState extends State<ComposterScreen> {
+class _ComposterScreenState extends State<ComposterScreen>
+    with AutomaticKeepAliveClientMixin<ComposterScreen> {
+  @override
+  bool get wantKeepAlive => true;
 
   final List<Widget> myTabs = <Widget>[
     Tab(icon: Icon(SmartHummusIcons.leaf, size: 20.0)),
     Tab(icon: Icon(SmartHummusIcons.water, size: 30.0)),
     Tab(icon: Icon(SmartHummusIcons.thermometer, size: 30.0)),
-    Tab(icon: Icon(SmartHummusIcons.gas, size: 30.0,)),
+    Tab(
+        icon: Icon(
+      SmartHummusIcons.gas,
+      size: 30.0,
+    )),
   ];
 
-  final List<Color> _colors = [Color.fromRGBO(143, 255, 0, 100.0), Color.fromRGBO(0, 179, 224, 100.0), Color.fromRGBO(255, 118, 0, 100.0), Color.fromRGBO(161, 17, 245, 100.0)];
+  final List<Color> _colors = [
+    Color.fromRGBO(143, 255, 0, 100.0),
+    Color.fromRGBO(0, 179, 224, 100.0),
+    Color.fromRGBO(255, 118, 0, 100.0),
+    Color.fromRGBO(161, 17, 245, 100.0)
+  ];
   int _selectedItem = 0;
 
   Future<List<List<Measures>>> _measures;
@@ -38,22 +50,23 @@ class _ComposterScreenState extends State<ComposterScreen> {
     super.initState();
     _hasComposter = Database.hasComposter();
 
-      _measures = fetchMeasures();
-      _atual = Database.getMeasureNow();
+    _measures = fetchMeasures();
+    _atual = Database.getMeasureNow();
   }
 
   Future<List<List<Measures>>> fetchMeasures() async {
     var m = List<List<Measures>>();
     String uid = await Database.getUserUid();
 
-    var response = await http.get('https://smarthummus.herokuapp.com/medidas/dia?uid=$uid');
+    var response = await http
+        .get('https://smarthummus.herokuapp.com/medidas/dia?uid=$uid');
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       List<Measures> list = List<Measures>();
       var decoded = jsonDecode(response.body);
-      for(var a in decoded){
+      for (var a in decoded) {
         list.add(Measures.fromJson(a));
       }
       m.add(list);
@@ -63,14 +76,15 @@ class _ComposterScreenState extends State<ComposterScreen> {
       throw Exception('Failed to load measures');
     }
 
-    response = await http.get('https://smarthummus.herokuapp.com/medidas/semana?uid=$uid');
+    response = await http
+        .get('https://smarthummus.herokuapp.com/medidas/semana?uid=$uid');
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       List<Measures> list = List<Measures>();
       var decoded = jsonDecode(response.body);
-      for(var a in decoded){
+      for (var a in decoded) {
         list.add(Measures.fromJson(a));
       }
       m.add(list);
@@ -80,14 +94,15 @@ class _ComposterScreenState extends State<ComposterScreen> {
       throw Exception('Failed to load measures');
     }
 
-    response = await http.get('https://smarthummus.herokuapp.com/medidas/mes?uid=$uid');
+    response = await http
+        .get('https://smarthummus.herokuapp.com/medidas/mes?uid=$uid');
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
       List<Measures> list = List<Measures>();
       var decoded = jsonDecode(response.body);
-      for(var a in decoded){
+      for (var a in decoded) {
         list.add(Measures.fromJson(a));
       }
       m.add(list);
@@ -113,9 +128,11 @@ class _ComposterScreenState extends State<ComposterScreen> {
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
       future: _hasComposter,
-      builder: (context, snapshot){
-        if(snapshot.hasData)
-          return snapshot.data ? buildScreenWithComposter() : buildScreenWithoutComposter();
+      builder: (context, snapshot) {
+        if (snapshot.hasData)
+          return snapshot.data
+              ? buildScreenWithComposter()
+              : buildScreenWithoutComposter();
         else if (snapshot.hasError)
           return Text("Ocorreu um erro ao carregar dados");
         return Container(
@@ -126,21 +143,22 @@ class _ComposterScreenState extends State<ComposterScreen> {
     );
   }
 
-  Widget buildScreenWithComposter(){
+  Widget buildScreenWithComposter() {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
           appBar: AppBar(
+              automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               bottom: TabBar(
-                onTap: (index){
+                onTap: (index) {
                   setState(() {
                     _selectedItem = index;
                   });
                 },
                 indicatorWeight: 4,
                 indicatorPadding: EdgeInsets.symmetric(horizontal: 25.0),
-                indicatorColor:  _colors[_selectedItem],
+                indicatorColor: _colors[_selectedItem],
                 unselectedLabelColor: Color.fromRGBO(190, 190, 190, 100.0),
                 labelColor: _colors[_selectedItem],
                 tabs: myTabs,
@@ -155,17 +173,15 @@ class _ComposterScreenState extends State<ComposterScreen> {
                     color: Color.fromRGBO(10, 10, 10, 100.0),
                   ),
                 ),
-              )
-          ),
+              )),
           body: FutureBuilder<List<List<Measures>>>(
             future: _measures,
-            builder: (context, snapshot){
-
-              if(snapshot.hasData){
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
                 return FutureBuilder<Measures>(
                   future: _atual,
-                  builder: (context, snapshot2){
-                    if(snapshot2.hasData)
+                  builder: (context, snapshot2) {
+                    if (snapshot2.hasData)
                       return TabBarView(
                         children: [
                           ProgressScreen(true),
@@ -174,8 +190,15 @@ class _ComposterScreenState extends State<ComposterScreen> {
                           GasesScreen(snapshot.data, snapshot2.data),
                         ],
                       );
-                    else if(snapshot2.hasError){
-                      return Text(snapshot2.error.toString());
+                    else if (snapshot2.hasError) {
+                      return TabBarView(
+                        children: [
+                          ProgressScreen(true),
+                          screenWithoutData(),
+                          screenWithoutData(),
+                          screenWithoutData()
+                        ],
+                      );
                     }
                     return Container(
                       alignment: Alignment.center,
@@ -183,37 +206,56 @@ class _ComposterScreenState extends State<ComposterScreen> {
                     );
                   },
                 );
-              }
-              else if(snapshot.hasError){
-                return Text(snapshot.error.toString());
+              } else if (snapshot.hasError) {
+                return TabBarView(
+                  children: [
+                    ProgressScreen(true),
+                    screenWithoutData(),
+                    screenWithoutData(),
+                    screenWithoutData()
+                  ],
+                );
               }
               return Container(
                 alignment: Alignment.center,
                 child: CircularProgressIndicator(),
               );
             },
-          )
-      ),
+          )),
     );
   }
 
-  Widget buildScreenWithoutComposter(){
+  Widget buildScreenWithoutComposter() {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-          title: Padding(
-            padding: EdgeInsets.only(top: 15.0, bottom: 10),
-            child: Text(
-              'MINHA COMPOSTEIRA',
-              style: GoogleFonts.raleway(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-                color: Color.fromRGBO(10, 10, 10, 100.0),
+        appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: Padding(
+              padding: EdgeInsets.only(top: 15.0, bottom: 10),
+              child: Text(
+                'MINHA COMPOSTEIRA',
+                style: GoogleFonts.raleway(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w800,
+                  color: Color.fromRGBO(10, 10, 10, 100.0),
+                ),
               ),
-            ),
-          )
+            )),
+        body: ProgressScreen(false));
+  }
+
+  Widget screenWithoutData() {
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Image(
+          image: AssetImage("assets/images/no-measures.png"),
+          fit: BoxFit.cover,
+          width: 150),
+      Container(
+        width: MediaQuery.of(context).size.width / 1.5,
+        child: Text(
+          "Ops! Parece que ainda não há dados para mostrar. Se a composteira for nova, aguarde uns instantes. Senão, verifique sua internet!",
+          textAlign: TextAlign.center,
+        ),
       ),
-      body:  ProgressScreen(false)
-    );
+    ]);
   }
 }

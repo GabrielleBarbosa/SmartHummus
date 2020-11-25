@@ -27,6 +27,7 @@ class _HomeShoppingState extends State<HomeShopping> {
       _initialScreen = initial;
       _specificScreen = specific;
     });
+    _products = Database.getProducts();
   }
 
   @override

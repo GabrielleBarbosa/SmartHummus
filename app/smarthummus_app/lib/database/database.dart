@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smarthummusapp/database/product.dart';
+import 'package:smarthummusapp/database/user.dart';
 
 import 'instruction.dart';
 import 'measures.dart';
@@ -264,6 +265,19 @@ class Database {
       await photoRef.delete();
     }
     catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<User> getPerfil() async {
+    try {
+      FirebaseUser u = await getUser();
+      DocumentSnapshot data = await Firestore.instance.collection('users').document(u.uid).get();
+      User user = User.fromDocument(data);
+      user.name = u.displayName;
+      return user;
+
+    }catch(e){
       throw Exception(e.toString());
     }
   }
