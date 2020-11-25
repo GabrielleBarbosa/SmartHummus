@@ -151,6 +151,13 @@ class _AddProductSalesScreenState extends State<AddProductSalesScreen> {
                         onTap: _pickFile,
                       ),
                 ]),
+              )),
+              Positioned.fill(child: Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: IconButton(icon: Icon(Icons.arrow_back, size: 40), onPressed: (){widget.returnToHomeSeller();},),
+                )
               ))
             ],
           ),

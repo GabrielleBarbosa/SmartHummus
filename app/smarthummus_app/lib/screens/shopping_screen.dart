@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smarthummusapp/cards/product_card.dart';
 import 'package:smarthummusapp/database/product.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/cart_screen.dart';
@@ -18,10 +16,12 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
   Product _product;
   List<Map<String, dynamic>> _cart = List<Map<String, dynamic>>();
   int _qtItems = 0;
+  bool _isOnShopping = true;
 
   void _viewProduct(Product){
       setState(() {
         _product = Product;
+        _isOnShopping = false;
       });
 
       _pageController.jumpToPage(1);
@@ -31,6 +31,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     setState(() {
       _cart.add({'product' : product, 'quantity' : quantity});
       _qtItems += quantity;
+      _isOnShopping = false;
     });
     _pageController.jumpToPage(2);
   }
@@ -39,10 +40,15 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
     setState(() {
       _cart.removeAt(index);
       _qtItems -= quantity;
+      _isOnShopping = false;
     });
   }
 
   void _returnShopping(){
+    setState(() {
+      _isOnShopping = true;
+    });
+
     _pageController.jumpToPage(0);
   }
 
@@ -52,6 +58,10 @@ class _ShoppingScreenState extends State<ShoppingScreen> {
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
+        leading: _isOnShopping ? Container() : IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => _returnShopping(),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

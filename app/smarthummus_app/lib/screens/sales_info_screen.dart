@@ -20,15 +20,10 @@ class _SalesInfoScreenState extends State<SalesInfoScreen> {
   String oi;
   Future<List<Product>> _products;
 
-  void _deleteProduct(String id) async{
-    await Database.deleteProduct(id);
+  void _deleteProduct(Product p) async{
+    await Database.deleteProduct(p);
   }
 
-  void _reload(){
-    setState((){
-      _products = Database.getMyProducts();
-    });
-  }
 
   @override
   void initState() {
@@ -222,7 +217,7 @@ class _SalesInfoScreenState extends State<SalesInfoScreen> {
                   return Column(
                       children: snapshot.data.map<ProductCardSales>((
                           Product product) {
-                        return  ProductCardSales(product, _deleteProduct, _reload);
+                        return  ProductCardSales(product, _deleteProduct);
                       }).toList()
                   );
                 }

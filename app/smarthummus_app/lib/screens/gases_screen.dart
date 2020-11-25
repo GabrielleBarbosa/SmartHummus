@@ -9,28 +9,40 @@ import 'package:smarthummusapp/database/measures.dart';
 
 class GasesScreen extends StatefulWidget {
   List<List<Measures>> _measures;
+  Measures _now;
 
-  GasesScreen(this._measures);
+  GasesScreen(this._measures, this._now);
 
   @override
-  _GasesScreenState createState() => _GasesScreenState(this._measures);
+  _GasesScreenState createState() => _GasesScreenState(this._measures, this._now);
 }
 
 class _GasesScreenState extends State<GasesScreen> {
   List<List<Measures>> _measures;
+  Measures _now;
 
-  _GasesScreenState(this._measures);
+  _GasesScreenState(this._measures, this._now);
 
   double flammableValue = 0.4;
 
   List<List<ChartContent>> gasMQ135;
   List<List<ChartContent>> gasMQ2;
 
+  List<Map<String, dynamic>> _warnings;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _makeChartArrays();
+    _makeWarnings();
+  }
+
+  void _makeWarnings() {
+    _warnings = List<Map<String, dynamic>>();
+
+    _warnings.add({'warning' : "Tudo certo!", 'type' : 0});
+    _warnings.add({'warning' : "Tudo certo!", 'type' : 0});
   }
 
   void _makeChartArrays() {
@@ -99,7 +111,7 @@ class _GasesScreenState extends State<GasesScreen> {
                 leading: Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: Text(
-                    "Inflamáveis",
+                    "Gás carbônico",
                     style: GoogleFonts.raleway(
                       fontSize: 18,
                     ),
@@ -107,9 +119,30 @@ class _GasesScreenState extends State<GasesScreen> {
                 ),
               ),
             ),
-            ChaartsCard(gasMQ2, "", Color(0xff12c2e9), Color(0xffc471ed)),
-            ChaartsCard(gasMQ135, "", Color(0xff12c2e9), Color(0xffc471ed)),
-            WarningsCard()
+            ChaartsCard(gasMQ2, "", Color(0xffc471ed), Color(0xff12c2e9)),
+
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, top: 20.0),
+              child: LinearPercentIndicator(
+                width: MediaQuery.of(context).size.width / 2.3,
+                lineHeight: 23.0,
+                percent: flammableValue,
+                backgroundColor: Color.fromRGBO(195, 214, 220, 100.0),
+                progressColor: Color.fromRGBO(161, 17, 245, 100.0),
+                leading: Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: Text(
+                    "Gás metano",
+                    style: GoogleFonts.raleway(
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            ChaartsCard(gasMQ135, "", Color(0xffc471ed), Color(0xff12c2e9)),
+            WarningsCard(_warnings)
           ],
         ),
       )),

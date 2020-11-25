@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:smarthummusapp/icons/smart_hummus_icons_icons.dart';
 import 'package:smarthummusapp/screens/feed_screen.dart';
 import 'package:smarthummusapp/screens/manage_perfil_screen.dart';
-import 'package:smarthummusapp/screens/product_screen.dart';
 import 'package:smarthummusapp/screens/sales_screen.dart';
 import 'package:smarthummusapp/screens/shopping_screen.dart';
 

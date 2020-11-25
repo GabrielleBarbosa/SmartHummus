@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:smarthummusapp/bluetooth/bluetooth_app.dart';
 import 'package:smarthummusapp/database/database.dart';
 import 'package:smarthummusapp/database/instruction.dart';
 
@@ -190,7 +190,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BluetoothApp()));
+                },
               ),
             ],
           )),

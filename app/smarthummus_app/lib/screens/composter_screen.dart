@@ -171,7 +171,7 @@ class _ComposterScreenState extends State<ComposterScreen> {
                           ProgressScreen(true),
                           HumidityScreen(snapshot.data, snapshot2.data),
                           TemperatureScreen(snapshot.data, snapshot2.data),
-                          GasesScreen(snapshot.data),
+                          GasesScreen(snapshot.data, snapshot2.data),
                         ],
                       );
                     else if(snapshot2.hasError){

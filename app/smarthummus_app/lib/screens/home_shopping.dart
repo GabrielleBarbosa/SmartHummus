@@ -22,7 +22,6 @@ class _HomeShoppingState extends State<HomeShopping> {
 
   Future<List<Product>> _products;
 
-
   void _changeState(initial, specific) {
     setState(() {
       _initialScreen = initial;

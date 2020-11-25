@@ -1,44 +1,42 @@
-// Power_outlet.ino
-
-// Variable for storing incoming value
-char Incoming_value = 0;
-
-void setup()
+#include <SoftwareSerial.h>
+SoftwareSerial BTserial(10, 11); // RX | TX
+ 
+const long baudRate = 9600; 
+char c=' ';
+boolean NL = true;
+ 
+void setup() 
 {
-  // Sets the data rate in bits per second (baud)
-  // for serial data transmission
-  Serial.begin(9600);
-
-  // Sets digital pin 8 as output pin
-  pinMode(8, OUTPUT);
-
-  // Initializes the pin 8 to LOW (i.e., OFF)
-  digitalWrite(8, LOW);
+    Serial.begin(9600);
+    Serial.print("Sketch:   ");   Serial.println(__FILE__);
+    Serial.print("Uploaded: ");   Serial.println(__DATE__);
+    Serial.println(" ");
+ 
+    BTserial.begin(baudRate);  
+    Serial.print("BTserial started at "); Serial.println(baudRate);
+    Serial.println(" ");
 }
-
+ 
 void loop()
 {
-  if (Serial.available() > 0)
-  {
-    // Read the incoming data and store it in the variable
-    Incoming_value = Serial.read();
-
-    // Print value of Incoming_value in Serial monitor
-    Serial.print(Incoming_value);
-    Serial.print("\n");
-
-    // Checking whether value of the variable
-    // is equal to 0
-    if (Incoming_value == '0')
-      digitalWrite(8, LOW); // If value is 0, turn OFF the device
-
-    // Checking whether value of the variable
-    // is equal to 1
-    else if (Incoming_value == '1')
-      digitalWrite(8, HIGH); // If value is 1, turn ON the device
-  }
-
-  // Adding a delay before running the loop again
-  delay(1);
-
+ 
+    // Read from the Bluetooth module and send to the Arduino Serial Monitor
+    if (BTserial.available())
+    {
+        c = BTserial.read();
+        Serial.write(c);
+    }
+ 
+ 
+    // Read from the Serial Monitor and send to the Bluetooth module
+    if (Serial.available())
+    {
+        c = Serial.read();
+        BTserial.write(c);   
+ 
+        // Echo the user input to the main window. The ">" character indicates the user entered text.
+        if (NL) { Serial.print(">");  NL = false; }
+        Serial.write(c);
+        if (c==10) { NL = true; }
+    }
 }

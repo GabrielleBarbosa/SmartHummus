@@ -28,6 +28,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
 
   List<List<ChartContent>> tempA, tempB;
 
+  List<Map<String, dynamic>> _warnings;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +38,68 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     t2 = _now.tempB.toInt().toString() + "°C";
 
     _makeChartArrays();
+    _makeWarnings();
+  }
+
+  void _makeWarnings() {
+    _warnings = List<Map<String, dynamic>>();
+    if (_now.tempA < 13) {
+      _warnings.add({
+        'warning': "A temperatura da camada \"A\" está um pouco baixa, o que pode deixar as minhocas em estado de dormência."
+            " Se você estiver em período de inverno pode ser normal, mas "
+            "se for possível, deixe a caixa no sol por cinco minutos, para dar uma esquentada!",
+        'type': 1
+      });
+    } else if(_now.tempA > 13 && _now.tempA < 30) {
+      _warnings.add({
+        'warning': "A temperatura da camada \"A\" está ideal!",
+        'type': 0
+      });
+    }
+    else if(_now.tempA > 30 && _now.tempA < 40) {
+      _warnings.add({
+        'warning': "A temperatura da camada \"A\" está um pouco elevada, o que pode estimular uma reprodução muito rápida nas minhocas, "
+            "se a composteira estiver em um lugar que pegue muito sol, mova-a para um lugar mais sombreado. Se já estiver assim,"
+            " deixe-a aberta por uns dez minutos para refrescar!",
+        'type': 1
+      });
+    } else {
+      _warnings.add({
+        'warning': "A umidade da camada \"A\" está alta demais, o que pode estimular uma reprodução muito rápida nas minhocas, "
+            "se a composteira estiver em um lugar que pegue muito sol, mova-a para um lugar mais sombreado. Se já estiver assim,"
+            " deixe-a aberta por uns vinte minutos para refrescar!",
+        'type': 2
+      });
+    }
+
+    if (_now.tempB < 13) {
+      _warnings.add({
+        'warning': "A temperatura da camada \"B\" está um pouco baixa, o que pode deixar as minhocas em estado de dormência."
+            " Se você estiver em período de inverno pode ser normal, mas "
+            "se for possível, deixe a caixa no sol por cinco minutos, para dar uma esquentada!",
+        'type': 1
+      });
+    } else if(_now.tempB > 13 && _now.tempB < 30) {
+      _warnings.add({
+        'warning': "A temperatura da camada \"B\" está ideal!",
+        'type': 0
+      });
+    }
+    else if(_now.tempB > 30 && _now.tempB < 40) {
+      _warnings.add({
+        'warning': "A temperatura da camada \"B\" está um pouco elevada, o que pode estimular uma reprodução muito rápida nas minhocas, "
+            "se a composteira estiver em um lugar que pegue muito sol, mova-a para um lugar mais sombreado. Se já estiver assim,"
+            " deixe-a aberta por uns dez minutos para refrescar!",
+        'type': 1
+      });
+    } else {
+      _warnings.add({
+        'warning': "A umidade da camada \"B\" está alta demais, o que pode estimular uma reprodução muito rápida nas minhocas, "
+            "se a composteira estiver em um lugar que pegue muito sol, mova-a para um lugar mais sombreado. Se já estiver assim,"
+            " deixe-a aberta por uns vinte minutos para refrescar!",
+        'type': 2
+      });
+    }
   }
 
   void _makeChartArrays() {
@@ -45,9 +109,9 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
     var aux2 = List<ChartContent>();
     for (var m in _measures[0]) {
       aux1.add(ChartContent(
-          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humA));
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.tempA));
       aux2.add(ChartContent(
-          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humB));
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.tempB));
     }
     tempA.add(aux1);
     tempB.add(aux2);
@@ -56,9 +120,9 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
 
     for (var m in _measures[1]) {
       aux1.add(ChartContent(
-          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humA));
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.tempA));
       aux2.add(ChartContent(
-          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humB));
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.tempB));
     }
     tempA.add(aux1);
     tempB.add(aux2);
@@ -67,9 +131,9 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
 
     for (var m in _measures[2]) {
       aux1.add(ChartContent(
-          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humA));
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.tempA));
       aux2.add(ChartContent(
-          int.parse((m.date.split(' ')[4]).split(':')[0]), m.humB));
+          int.parse((m.date.split(' ')[4]).split(':')[0]), m.tempB));
     }
     tempA.add(aux1);
     tempB.add(aux2);
@@ -184,7 +248,7 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
             ),
           ),
           ChaartsCard(tempB, "°C", Colors.orangeAccent, Colors.red),
-          WarningsCard()
+          WarningsCard(_warnings)
         ],
       ),
     )));

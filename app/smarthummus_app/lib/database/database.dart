@@ -166,7 +166,7 @@ class Database {
 
   static Future<List<Product>> getProducts() async {
     try{
-      QuerySnapshot data = await Firestore.instance.collection('produtos').orderBy('data').getDocuments();
+      QuerySnapshot data = await Firestore.instance.collection('produtos').orderBy('data', descending: true).getDocuments();
 
       List<Product> products = List<Product>();
       data.documents.forEach((element) {
@@ -246,10 +246,24 @@ class Database {
     }
   }
 
-  static Future<void> deleteProduct(String id) async{
+  static Future<void> deleteProduct(Product p) async{
     try{
-      await Firestore.instance.collection('produtos').document(id).delete();
+
+      await deleteImage(p.image);
+      await Firestore.instance.collection('produtos').document(p.id).delete();
     }catch(e){
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<void> deleteImage(String imgUrl) async {
+    try {
+      StorageReference photoRef =
+      await FirebaseStorage.instance.getReferenceFromUrl(imgUrl);
+
+      await photoRef.delete();
+    }
+    catch(e){
       throw Exception(e.toString());
     }
   }
