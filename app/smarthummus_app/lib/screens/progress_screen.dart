@@ -7,9 +7,11 @@ import 'package:smarthummusapp/database/instruction.dart';
 
 class ProgressScreen extends StatefulWidget {
   bool _hasComposter;
-  bool _isFull;
+  bool isFull;
   Function() reload;
-  ProgressScreen(this._hasComposter, this.reload, this._isFull);
+
+  ProgressScreen(this._hasComposter, this.reload, this.isFull);
+
   @override
   _ProgressScreenState createState() =>
       _ProgressScreenState(this._hasComposter);
@@ -17,6 +19,7 @@ class ProgressScreen extends StatefulWidget {
 
 class _ProgressScreenState extends State<ProgressScreen> {
   bool _hasComposter;
+
   _ProgressScreenState(this._hasComposter);
 
   double progress = 0.4;
@@ -149,6 +152,25 @@ class _ProgressScreenState extends State<ProgressScreen> {
             ),
           ),
         ),
+        SizedBox(
+          height: 20,
+        ),
+        Divider(),
+        Image(
+          image: AssetImage('assets/images/level.png'),
+          width: 50,
+        ),
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          width: MediaQuery.of(context).size.width / 1.5,
+          child: Text(widget.isFull
+              ? "O nível do chorume está cheio, você já pode extraí-lo pela torneira!"
+              : "O chorume ainda não está cheio!",
+            textAlign: TextAlign.center,),
+        ),
+
+        Divider(),
+
       ],
     );
   }
@@ -168,9 +190,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
               Text(
                 "Parece que você ainda não\ntem uma composteira :(",
                 textAlign: TextAlign.center,
-                style: GoogleFonts.raleway(
-                  fontSize: 17
-                ),
+                style: GoogleFonts.raleway(fontSize: 17),
               ),
               SizedBox(height: 30),
               RaisedButton(
@@ -192,7 +212,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BluetoothApp())).then((value) => widget.reload());
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) => BluetoothApp()))
+                      .then((value) => widget.reload());
                 },
               ),
             ],

@@ -203,7 +203,7 @@ class _ComposterScreenState extends State<ComposterScreen>  with AutomaticKeepAl
                     else if (snapshot2.hasError) {
                       return TabBarView(
                         children: [
-                          ProgressScreen(true, _reload),
+                          ProgressScreen(true, _reload, false),
                           screenWithoutData(),
                           screenWithoutData(),
                           screenWithoutData()
@@ -219,7 +219,7 @@ class _ComposterScreenState extends State<ComposterScreen>  with AutomaticKeepAl
               } else if (snapshot.hasError) {
                 return TabBarView(
                   children: [
-                    ProgressScreen(true, _reload),
+                    ProgressScreen(true, _reload, false),
                     screenWithoutData(),
                     screenWithoutData(),
                     screenWithoutData()
@@ -251,7 +251,7 @@ class _ComposterScreenState extends State<ComposterScreen>  with AutomaticKeepAl
                 ),
               ),
             )),
-        body: ProgressScreen(false,_reload));
+        body: ProgressScreen(false,_reload, false));
   }
 
   Widget screenWithoutData() {

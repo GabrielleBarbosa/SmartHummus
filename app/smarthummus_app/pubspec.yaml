@@ -88,6 +88,7 @@ flutter:
     - assets/images/not-seller.png
     - assets/images/empty-cart.png
     - assets/images/default-picture.png
+    - assets/images/level.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

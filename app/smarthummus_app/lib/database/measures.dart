@@ -29,7 +29,7 @@ class Measures {
         humB= snapshot.data['umidade1']+0.0;
         humA= snapshot.data['umidade2']+0.0;
         gasMQ2= snapshot.data['gasMQ2']+0.0;
-        isFull= snapshot.data['cheio'] == 0 ? false : true;
+        isFull= snapshot.data['cheio'] == 0 ? true : false;
         gasMQ135= snapshot.data['gasMQ135']+0.0;
         date= snapshot.data['horario'];
   }
