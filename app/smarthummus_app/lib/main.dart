@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smarthummusapp/screens/home_screen.dart';
+import 'package:smarthummusapp/screens/introduction_screen.dart';
 import 'package:smarthummusapp/screens/sign_in_screen.dart';
 
 import 'database/database.dart';
@@ -32,7 +33,7 @@ class SmartHummusApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: initialRoute,
       routes: {
-        '/': (context) => SignInScreen(),
+        '/': (context) => IntroductionScreen(),
         '/home': (context) => HomeScreen(),
       },
     );

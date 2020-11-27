@@ -7,8 +7,9 @@ import 'package:smarthummusapp/database/instruction.dart';
 
 class ProgressScreen extends StatefulWidget {
   bool _hasComposter;
-
-  ProgressScreen(this._hasComposter);
+  bool _isFull;
+  Function() reload;
+  ProgressScreen(this._hasComposter, this.reload, this._isFull);
   @override
   _ProgressScreenState createState() =>
       _ProgressScreenState(this._hasComposter);
@@ -191,7 +192,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BluetoothApp()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => BluetoothApp())).then((value) => widget.reload());
                 },
               ),
             ],

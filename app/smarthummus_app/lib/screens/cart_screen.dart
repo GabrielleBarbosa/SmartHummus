@@ -56,36 +56,40 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Widget _buildWithItems(total) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Text(
-            "Total: R\$" + total.toString(),
-            style: GoogleFonts.raleway(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 1.2,
-              color: Colors.black87,
-            ),
+    return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+      Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: Text(
+          "Total: R\$" + total.toString(),
+          style: GoogleFonts.raleway(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2,
+            color: Colors.black87,
           ),
         ),
-        RaisedButton(
-          child: Text("Finalizar Compra"),
-        ),
-        Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Container(
-                alignment: Alignment.center,
-                child: RaisedButton(
-                  child: Text("Continuar Comprando"),
-                  onPressed: () {
-                    widget._returnShopping();
-                  },
-                )))
-      ],
-    );
+      ),
+      RaisedButton(
+        child: Text("Finalizar Compra"),
+      ),
+      Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: Container(
+              alignment: Alignment.center,
+              child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                color: Color.fromRGBO(148, 223, 0, 1),
+                child: Text(
+                  "Continuar Comprando",
+                  style: GoogleFonts.raleway(color: Colors.white),
+                ),
+                /**/ onPressed: () {
+                  widget._returnShopping();
+                },
+              )))
+    ]);
   }
 
   Widget _buildWithoutItems() {
@@ -97,8 +101,11 @@ class _CartScreenState extends State<CartScreen> {
             fit: BoxFit.cover,
             width: 150),
         Container(
-          width: MediaQuery.of(context).size.width/1.5,
-          child: Text("Ops! Parece que não há nada no seu carrinho =(", textAlign: TextAlign.center,),
+          width: MediaQuery.of(context).size.width / 1.5,
+          child: Text(
+            "Ops! Parece que não há nada no seu carrinho =(",
+            textAlign: TextAlign.center,
+          ),
         ),
         SizedBox(
           height: 20,
@@ -114,8 +121,8 @@ class _CartScreenState extends State<CartScreen> {
             child: Text("Retornar à área\nde compras",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.raleway(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700)),),
+                    color: Colors.white, fontWeight: FontWeight.w700)),
+          ),
           onPressed: () {
             widget._returnShopping();
           },

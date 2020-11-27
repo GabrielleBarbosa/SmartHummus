@@ -17,8 +17,8 @@ class ComposterScreen extends StatefulWidget {
   _ComposterScreenState createState() => _ComposterScreenState();
 }
 
-class _ComposterScreenState extends State<ComposterScreen>
-    with AutomaticKeepAliveClientMixin<ComposterScreen> {
+class _ComposterScreenState extends State<ComposterScreen>  with AutomaticKeepAliveClientMixin<ComposterScreen>{
+
   @override
   bool get wantKeepAlive => true;
 
@@ -45,6 +45,14 @@ class _ComposterScreenState extends State<ComposterScreen>
   Future<Measures> _atual;
   Future<bool> _hasComposter;
 
+  void _reload(){
+    setState(() {
+      _hasComposter = Database.hasComposter();
+      _measures = fetchMeasures();
+      _atual = Database.getMeasureNow();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +61,8 @@ class _ComposterScreenState extends State<ComposterScreen>
     _measures = fetchMeasures();
     _atual = Database.getMeasureNow();
   }
+
+
 
   Future<List<List<Measures>>> fetchMeasures() async {
     var m = List<List<Measures>>();
@@ -184,7 +194,7 @@ class _ComposterScreenState extends State<ComposterScreen>
                     if (snapshot2.hasData)
                       return TabBarView(
                         children: [
-                          ProgressScreen(true),
+                          ProgressScreen(true, _reload, snapshot2.data.isFull),
                           HumidityScreen(snapshot.data, snapshot2.data),
                           TemperatureScreen(snapshot.data, snapshot2.data),
                           GasesScreen(snapshot.data, snapshot2.data),
@@ -193,7 +203,7 @@ class _ComposterScreenState extends State<ComposterScreen>
                     else if (snapshot2.hasError) {
                       return TabBarView(
                         children: [
-                          ProgressScreen(true),
+                          ProgressScreen(true, _reload),
                           screenWithoutData(),
                           screenWithoutData(),
                           screenWithoutData()
@@ -209,7 +219,7 @@ class _ComposterScreenState extends State<ComposterScreen>
               } else if (snapshot.hasError) {
                 return TabBarView(
                   children: [
-                    ProgressScreen(true),
+                    ProgressScreen(true, _reload),
                     screenWithoutData(),
                     screenWithoutData(),
                     screenWithoutData()
@@ -228,6 +238,7 @@ class _ComposterScreenState extends State<ComposterScreen>
   Widget buildScreenWithoutComposter() {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             title: Padding(
               padding: EdgeInsets.only(top: 15.0, bottom: 10),
@@ -240,7 +251,7 @@ class _ComposterScreenState extends State<ComposterScreen>
                 ),
               ),
             )),
-        body: ProgressScreen(false));
+        body: ProgressScreen(false,_reload));
   }
 
   Widget screenWithoutData() {

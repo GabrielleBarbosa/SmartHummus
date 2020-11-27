@@ -50,7 +50,7 @@ class Database {
       try{
         await hasComposter();
       }catch(e){
-        setHasComposter(authResult.user.uid, false);
+        setHasComposter(false, uid: authResult.user.uid);
         setIsSeller(authResult.user.uid, false);
       }
 
@@ -63,7 +63,7 @@ class Database {
   static Future<FirebaseUser> signUp(String email, String password, String name) async{
       try{
         final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        await setHasComposter(authResult.user.uid, false);
+        await setHasComposter(false, uid: authResult.user.uid);
         await setIsSeller(authResult.user.uid, false);
 
         UserUpdateInfo info = new UserUpdateInfo();
@@ -101,9 +101,17 @@ class Database {
     }
   }
 
-  static Future<void> setHasComposter(uid, newValue) async{
+  static Future<void> setHasComposter(newValue, {uid}) async{
     try{
-      await Firestore.instance.collection('users').document(uid).setData({'temComposteira': newValue});
+
+      if(uid == null) {
+        String u = await getUserUid();
+        await Firestore.instance.collection('users').document(u).setData({'temComposteira': newValue});
+      }
+      else {
+        await Firestore.instance.collection('users').document(uid).setData(
+            {'temComposteira': newValue});
+      }
     }catch(e){
       throw Exception (e.toString());
     }

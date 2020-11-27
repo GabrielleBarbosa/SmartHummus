@@ -93,7 +93,9 @@ class _MainPage extends State<BluetoothApp> {
   void connect(){
     BluetoothConnection.toAddress(_device.address).then((_connection) { 
       print('Connected to the device');
-      connection = _connection;
+      setState(() {
+        connection = _connection;
+      });
 
       connection.input.listen(_onDataReceived).onDone(() {
         // Example: Detect which side closed the connection
@@ -124,117 +126,118 @@ class _MainPage extends State<BluetoothApp> {
         title: Text('Conexão via Bluetooth', style: GoogleFonts.raleway(color: Colors.white),),
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 15, left: 20, right: 20),
-            child: Row(
-              children: [
-                Text('Bluetooth'),
-                Flexible(fit: FlexFit.tight, child: SizedBox(),),
-                Switch(
-                  value: _bluetoothState.isEnabled,
-                  onChanged: (bool value) {
-                    // Do the request and update with the true value then
-                    future() async {
-                      // async lambda seems to not working
-                      if (value)
-                        await FlutterBluetoothSerial.instance.requestEnable();
-                      else
-                        await FlutterBluetoothSerial.instance.requestDisable();
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+                child: Row(
+                  children: [
+                    Text('Bluetooth'),
+                    Flexible(fit: FlexFit.tight, child: SizedBox(),),
+                    Switch(
+                      value: _bluetoothState.isEnabled,
+                      onChanged: (bool value) {
+                        // Do the request and update with the true value then
+                        future() async {
+                          // async lambda seems to not working
+                          if (value)
+                            await FlutterBluetoothSerial.instance.requestEnable();
+                          else
+                            await FlutterBluetoothSerial.instance.requestDisable();
+                        }
+
+                        future().then((_) {
+                          setState(() {});
+                        });
+                      },
+                    ),
+                    Text('ou'),
+                    IconButton(
+                      icon: Icon(Icons.settings, color: Colors.blueAccent,),
+                      color: Color.fromRGBO(124, 219, 0, 1.0),
+                      onPressed: () {
+                        FlutterBluetoothSerial.instance.openSettings();
+                      },
+                    ),
+                  ],
+                ),),
+              Divider(),
+              ListTile(title: const Text('Procurar a composteira\n(selecione a opção com nome HC-05)')),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    color: Color.fromRGBO(124, 219, 0, 1.0),
+                    child: Container(
+                        width: 130,
+                        height: 40,
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text("BUSCAR",
+                                style: GoogleFonts.raleway(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700)),
+                            Padding(
+                                padding: EdgeInsets.only(left: 10.0),
+                                child: Icon(Icons.search,
+                                    color: Colors.white, size: 15.0)
+                            )
+                          ],
+                        )),
+                    onPressed: !_bluetoothState.isEnabled ? null : () async {
+                      final BluetoothDevice selectedDevice =
+                      await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return DiscoveryPage();
+                          },
+                        ),
+                      );
+
+                      if (selectedDevice != null) {
+                        setState(() {
+
+                          _device = selectedDevice;
+                        });
+                        connect();
+                        print('Discovery -> selected ' + selectedDevice.address);
+                      } else {
+                        print('Discovery -> no device selected');
+                      }
                     }
-
-                    future().then((_) {
-                      setState(() {});
-                    });
-                  },
                 ),
-                Text('ou'),
-                IconButton(
-                  icon: Icon(Icons.settings, color: Colors.blueAccent,),
-                  color: Color.fromRGBO(124, 219, 0, 1.0),
-                  onPressed: () {
-                    FlutterBluetoothSerial.instance.openSettings();
-                  },
-                ),
-              ],
-            ),),
-            Divider(),
-            ListTile(title: const Text('Procurar a composteira\n(selecione a opção com nome HC-05)')),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 20),
-              child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
-                  ),
-                  color: Color.fromRGBO(124, 219, 0, 1.0),
-                  child: Container(
-                      width: 130,
-                      height: 40,
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("BUSCAR",
-                              style: GoogleFonts.raleway(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700)),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10.0),
-                              child: Icon(Icons.search,
-                                  color: Colors.white, size: 15.0)
-                          )
-                        ],
-                      )),
-                  onPressed: !_bluetoothState.isEnabled ? null : () async {
-                    final BluetoothDevice selectedDevice =
-                    await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return DiscoveryPage();
-                        },
-                      ),
-                    );
-
-                    if (selectedDevice != null) {
-                      setState(() {
-
-                        _device = selectedDevice;
-                      });
-                      connect();
-                      print('Discovery -> selected ' + selectedDevice.address);
-                    } else {
-                      print('Discovery -> no device selected');
-                    }
-                  }
               ),
-            ),
-            Divider(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                child: TextField(
-                  controller: _nameWifiController,
-                  decoration: InputDecoration(
-                    labelText: 'Nome da rede WiFi doméstica',
+              Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Container(
+                  child: TextField(
+                    controller: _nameWifiController,
+                    decoration: InputDecoration(
+                      labelText: 'Nome da rede WiFi doméstica',
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Container(
-                child: TextField(
-                  controller: _passWifiController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Senha do WiFi',
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Container(
+                  child: TextField(
+                    controller: _passWifiController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Senha do WiFi',
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 30,),
-            RaisedButton(
+              SizedBox(height: 30,),
+              RaisedButton(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50.0),
                 ),
@@ -258,14 +261,15 @@ class _MainPage extends State<BluetoothApp> {
                       ],
                     )),
                 onPressed: _device == null || connection == null ? null : connection.isConnected ? (){_sendMessage();} : null,
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 
-  void _onDataReceived(Uint8List data) {
+  void _onDataReceived(Uint8List data) async {
     // Allocate buffer for parsed data
     int backspacesCounter = 0;
     data.forEach((byte) {
@@ -293,6 +297,11 @@ class _MainPage extends State<BluetoothApp> {
     // Create message if there is new line character
     String dataString = String.fromCharCodes(buffer);
     print(dataString);
+    if(dataString.contains('t'))
+      {
+        await Database.setHasComposter(true);
+        Navigator.of(context).pop();
+      }
   }
 
   void _sendMessage() async {
@@ -302,7 +311,7 @@ class _MainPage extends State<BluetoothApp> {
     if (name.length > 0 && pass.length > 0) {
       String uid = await Database.getUserUid();
       try {
-        connection.output.add(utf8.encode("$name:$pass:$uid" + "\r\n"));
+        connection.output.add(utf8.encode("$name:$pass:$uid\r\n"));
         await connection.output.allSent;
       } catch (e) {
         // Ignore error, but notify state
