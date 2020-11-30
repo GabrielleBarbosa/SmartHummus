@@ -50,8 +50,10 @@ class Database {
       try{
         await hasComposter();
       }catch(e){
-        setHasComposter(false, uid: authResult.user.uid);
+
+        await Firestore.instance.collection('users').document(authResult.user.uid).setData({'nome':authResult.user.displayName});
         setIsSeller(authResult.user.uid, false);
+        setHasComposter(false);
       }
 
       return authResult.user;
@@ -63,8 +65,10 @@ class Database {
   static Future<FirebaseUser> signUp(String email, String password, String name) async{
       try{
         final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        await setHasComposter(false, uid: authResult.user.uid);
+
+        await Firestore.instance.collection('users').document(authResult.user.uid).setData({'nome':name});
         await setIsSeller(authResult.user.uid, false);
+        await setHasComposter(false);
 
         UserUpdateInfo info = new UserUpdateInfo();
         info.displayName = name;
@@ -101,17 +105,10 @@ class Database {
     }
   }
 
-  static Future<void> setHasComposter(newValue, {uid}) async{
+  static Future<void> setHasComposter(newValue) async{
     try{
-
-      if(uid == null) {
         String u = await getUserUid();
-        await Firestore.instance.collection('users').document(u).setData({'temComposteira': newValue});
-      }
-      else {
-        await Firestore.instance.collection('users').document(uid).setData(
-            {'temComposteira': newValue});
-      }
+        await Firestore.instance.collection('users').document(u).updateData({'temComposteira': newValue});
     }catch(e){
       throw Exception (e.toString());
     }
@@ -119,7 +116,7 @@ class Database {
 
   static Future<void> setIsSeller(uid, newValue) async{
     try{
-      await Firestore.instance.collection('users').document(uid).setData({'isVendedor': newValue});
+      await Firestore.instance.collection('users').document(uid).updateData({'isVendedor': newValue});
     }catch(e){
       throw Exception (e.toString());
     }
